@@ -11,13 +11,15 @@ import java.util.Collection;
  */
 public class Bild_einlesen {
     //test
+    //test vom HS aus!
+
     public static void main(String[] args) {
         Collection<String> al = new ArrayList<>();
 
 
         try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream("bild.jpg"))){
-            String puffer = null;
-            int zeile = 0;
+            String puffer;
+            int zeile=0;
             while((zeile = reader.read())!= -1){
 
                 puffer = null;
