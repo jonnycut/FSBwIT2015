@@ -12,7 +12,7 @@ import java.util.Collection;
 public class Bild_einlesen {
     //test
     //test vom HS aus!
-
+    //test die zweite!
     public static void main(String[] args) {
         Collection<String> al = new ArrayList<>();
 
