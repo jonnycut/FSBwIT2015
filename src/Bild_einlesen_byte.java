@@ -90,8 +90,8 @@ public class Bild_einlesen_byte {
                 int start = change.indexOf(":");
                 puffS = change.substring(start+2,start+49).trim();
 //                ausgabeListe.add(puffS.split(" "));
-                String[] bla =puffS.split(" ");
-                for (String s:bla)
+                String[] outArray =puffS.split(" ");
+                for (String s:outArray)
                     writer.write((byte)Integer.parseInt(s,16));
 
 
