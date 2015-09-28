@@ -21,9 +21,12 @@ public class Bild_einlesen_byte {
             int zLang;
 
             while((zLang = reader.read(puffer))!= -1){
-                byte[] toStore = new byte[zLang];
+                byte[] toStore = new byte[16];
 
-                for(int i = 0; i<zLang;i++){
+                for(int i = 0; i<16;i++){
+                    if(zLang<16){
+                        //array auffüllen
+                    }
                     toStore[i] = puffer[i];
                 }
 
@@ -61,9 +64,9 @@ public class Bild_einlesen_byte {
                     ausgabe.append(puffer+" ");
                 }
 
-                fileWr.write(adresseHex+":"+ ausgabe+":"+ new String(array).replaceAll("[^\\p{Print}]","."));
-                fileWr.newLine();
-                adresse = adresse+16;
+                    fileWr.write(adresseHex + ": " + ausgabe + " " + new String(array).replaceAll("[^\\p{Print}]", "."));
+                    fileWr.newLine();
+                    adresse = adresse + 16;
 
             }
 
@@ -78,11 +81,18 @@ public class Bild_einlesen_byte {
 
 
             String change;
-            String[] puffArray;
+            String puffS;
+
 
             while((change = fileR.readLine())!= null){
-                puffArray = change.split(":");
-                ausgabeListe.add(new BigInteger(puffArray[1].replaceAll(" ", ""),16).toByteArray());
+                int start = change.indexOf(":");
+                System.out.println(change);
+
+                puffS = change.substring(start+2,start+47);
+
+
+                ausgabeListe.add(new BigInteger(puffS.replaceAll(" ", ""), 16).toByteArray());
+
             }
 
         } catch (FileNotFoundException e) {
@@ -101,8 +111,12 @@ public class Bild_einlesen_byte {
             //ToDo: schreiben in Datei
             for (byte[] array: ausgabeListe){
 
+                for (byte b : array){
+                    writer.write(b);
+                }
 
-                writer.write(array);
+
+
 
             }
 
