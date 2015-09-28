@@ -5,14 +5,14 @@ import java.util.Arrays;
 import java.util.Collection;
 
 /*
- * Created by KNapret on 18.09.2015.
+ * Created by JonnyCut on 18.09.2015.
  */
 public class Bild_einlesen_byte {
 
 
     public static void main(String[] args) {
         Collection<byte[]> al = new ArrayList<>();
-        Collection<String[]> ausgabeListe = new ArrayList<>();
+//        Collection<String[]> ausgabeListe = new ArrayList<>();
 
 
         try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream("hexTest.bmp"))){
@@ -89,7 +89,7 @@ public class Bild_einlesen_byte {
 
                 int start = change.indexOf(":");
                 puffS = change.substring(start+2,start+49).trim();
-//                ausgabeListe.add(puffS.split(" "));
+//                ausgabeListe.add(puffS.split(" ")); //möglichkeit 2, den outPut vor Ausgabe zu speichern
                 String[] outArray =puffS.split(" ");
                 for (String s:outArray)
                     writer.write((byte)Integer.parseInt(s,16));
