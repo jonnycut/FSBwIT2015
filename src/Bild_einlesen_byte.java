@@ -12,7 +12,7 @@ public class Bild_einlesen_byte {
 
     public static void main(String[] args) {
         Collection<byte[]> al = new ArrayList<>();
-        Collection<byte[]> ausgabeListe = new ArrayList<>();
+        Collection<String[]> ausgabeListe = new ArrayList<>();
 
 
         try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream("hexTest.bmp"))){
@@ -21,12 +21,10 @@ public class Bild_einlesen_byte {
             int zLang;
 
             while((zLang = reader.read(puffer))!= -1){
-                byte[] toStore = new byte[16];
+                byte[] toStore = new byte[zLang];
 
-                for(int i = 0; i<16;i++){
-                    if(zLang<16){
-                        //array auffüllen
-                    }
+                for(int i = 0; i<zLang;i++){
+
                     toStore[i] = puffer[i];
                 }
 
@@ -62,8 +60,11 @@ public class Bild_einlesen_byte {
                     String puffer = Integer.toHexString(b&255);
                     if(puffer.length()<2) puffer = 0+puffer;
                     ausgabe.append(puffer+" ");
-                }
 
+                }
+                    while (ausgabe.length()<48){
+                        ausgabe.append(" ");
+                    }
                     fileWr.write(adresseHex + ": " + ausgabe + " " + new String(array).replaceAll("[^\\p{Print}]", "."));
                     fileWr.newLine();
                     adresse = adresse + 16;
@@ -76,8 +77,8 @@ public class Bild_einlesen_byte {
             System.out.println("Fehler beim Schreiben");
         }
 
-
-        try(BufferedReader fileR = new BufferedReader(new FileReader("hex_editor.txt"))){
+        //Reader und writer werden gleichzeitig aufgerufen
+        try(BufferedReader fileR = new BufferedReader(new FileReader("hex_editor.txt"));BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream("hex_bitmap.bmp"))){
 
 
             String change;
@@ -85,46 +86,38 @@ public class Bild_einlesen_byte {
 
 
             while((change = fileR.readLine())!= null){
+
                 int start = change.indexOf(":");
-                System.out.println(change);
+                puffS = change.substring(start+2,start+49).trim();
+//                ausgabeListe.add(puffS.split(" "));
+                String[] bla =puffS.split(" ");
+                for (String s:bla)
+                    writer.write((byte)Integer.parseInt(s,16));
 
-                puffS = change.substring(start+2,start+47);
 
+                }
 
-                ausgabeListe.add(new BigInteger(puffS.replaceAll(" ", ""), 16).toByteArray());
-
-            }
-
-        } catch (FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
-
-
-
-
-
-        try(BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream("hex_bitmap.bmp"))){
-            //ToDo: schreiben in Datei
-            for (byte[] array: ausgabeListe){
-
-                for (byte b : array){
-                    writer.write(b);
-                }
-
-
-
-
-            }
-
-        }
-
-        catch(IOException e){
-            System.out.println("Fehler beim Schreiben!");
-        }
+        //Nicht mehr notwendig, da oben in einem Zug
+//        try(BufferedOutputStream writer = new BufferedOutputStream(new FileOutputStream("hex_bitmap.bmp"))){
+//
+//            for (String[] value: ausgabeListe){
+//
+//                for(String s: value)
+//                    writer.write((byte)Integer.parseInt(s,16));
+//
+//            }
+//
+//        }
+//
+//        catch(IOException e){
+//            System.out.println("Fehler beim Schreiben!");
+//        }
 
 
 
