@@ -21,7 +21,7 @@ public class regularExp_uebung {
             int counter=0;
             String zeile;
             while((zeile = br.readLine())!=null){
-
+                //test
                 Matcher m = p.matcher(zeile); //nimmt den von p kompilierten Audruck und ueberprueft das "matching"
 
                 while(m.find()) {
