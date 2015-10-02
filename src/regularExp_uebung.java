@@ -24,10 +24,10 @@ public class regularExp_uebung {
 
                 Matcher m = p.matcher(zeile); //nimmt den von p kompilierten Audruck und ueberprueft das "matching"
 
-                while(m.find())
+                while(m.find()) {
                     System.out.println(m.group());
-                    counter ++;
-
+                    counter++;
+                }
             }
             System.out.println(p+" wurde: " + counter+" erwähnt");
 
