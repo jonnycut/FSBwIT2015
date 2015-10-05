@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by KNapret on 29.09.2015.
+ * Created by JonnyCut on 29.09.2015.
  */
 public class regularExp_uebung {
     public static void main(String[] args) {

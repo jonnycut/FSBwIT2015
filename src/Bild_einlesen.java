@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by KNapret on 18.09.2015.
+ * Created by JonnyCut on 18.09.2015.
  */
 public class Bild_einlesen {
     //test
