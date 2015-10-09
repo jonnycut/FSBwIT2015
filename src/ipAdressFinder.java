@@ -11,27 +11,29 @@ import java.util.regex.Pattern;
 public class ipAdressFinder {
 
     public static void main(String[] args) {
-       try( BufferedReader reader = new BufferedReader(new FileReader("ip.log"))){
+        try (BufferedReader reader = new BufferedReader(new FileReader("ip.log"))) {
 
-           Pattern p = Pattern.compile("\\d");//ToDo: RegEx für IP finden
+            Pattern p = Pattern.compile("((\\d|[1-9 ]\\d|1\\d{2}|2[0-4]\\d|25[0-5])\\.){3}((255[0-5]|2[0-4]\\d|1\\d{2}|[1-9]\\d|\\d))");
+            //                           ((0-9 OR 1-9,digit OR 1, 2 digits OR 2,0-4, digit OR 25,0-5.)3 mal hintereinander, Dann rückwärts damit nicht nach 1 Zahl abgebrochen wird
 
-           String zeile;
-           int counter = 0;
-           while((zeile = reader.readLine())!=null){
+            String zeile;
+            int counter = 0;
+            while ((zeile = reader.readLine()) != null) {
 
-               Matcher m = p.matcher(zeile);
-               while(m.find()){
+                Matcher m = p.matcher(zeile);
+                while (m.find()) {
+ja
 
-                   counter++;
-                   System.out.println(m.group());
-               }
-           }
-           System.out.println(counter);
+                    counter++;
+                    System.out.println(m.group());
+                }
+            }
+            System.out.println(counter);
 
-       } catch (FileNotFoundException e) {
-           e.printStackTrace();
-       } catch (IOException e) {
-           e.printStackTrace();
-       }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
