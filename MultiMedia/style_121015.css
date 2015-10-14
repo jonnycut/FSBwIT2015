@@ -1,0 +1,18 @@
+#Erde{
+    background-color: aqua;
+}
+body p{
+    color: white;
+}
+
+.Kontinent{
+    background-color: green;
+
+}
+.Land{
+    background-color: red;
+}
+.Stadt{
+    background-color: yellow;
+}
+
