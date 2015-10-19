@@ -1,0 +1,61 @@
+*{
+    padding: 0;
+    margin: 0;
+
+}
+.test1{
+    background-color: red;
+    width: 1000px;
+    height: 100px;
+    padding: 20px; /*Innenabstand rundherum, auch left, right, bottom, top möglich*/
+    /*padding [oben] [rechts] [unten] [links] --> Bsp: padding 10px 5px 4px 2px*/
+
+
+    border: black 5px solid; /*Rahmen: Farbe, Stärke, Art; rundherum, auch left, right, bottom, top möglich*/
+
+    border-top: black 10px dashed;
+    border-bottom: black 10px dashed;
+
+    margin: 20px; /*Außenabstand*/
+
+}
+#zwei{
+    color: white;
+    background-color: blue;
+    width: auto;
+    height: auto;
+    padding: 10px 5px 10px 10px;
+    border-bottom: black 5px dashed;
+    border-top: black 5px dashed;
+
+}
+
+#test2 {
+    width: 400px;
+    border: black 2px solid;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-right: 40px;
+    padding-left: 40px;
+    margin: 10px;
+
+}
+
+#test3{
+    width: 400px;
+    padding: 20px;
+    border-left: red 5px double ;
+    border-right: red 5px double;
+    margin: 10px;
+}
+
+#test4{
+
+    width: auto;
+    height: auto;
+    background-color: yellow;
+    border: yellowgreen 5px dotted;
+    margin: 10px;
+}
+
