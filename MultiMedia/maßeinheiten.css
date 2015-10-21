@@ -1,0 +1,21 @@
+#outline{
+    border: solid 2px black;
+    padding: 20px;
+}
+
+#outline div{
+    font-size: 30px;
+    text-align: center;
+
+    background-color: green;
+    border: solid 2px red;
+    margin: 20px;
+}
+#box1{
+    width: 80em;
+
+}
+
+#box2{
+    width: 48em;
+}

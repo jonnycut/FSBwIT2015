@@ -13,34 +13,39 @@
 <body>
 
 
-    <table>
+    <table border="1" style="width: 100%;>
         <thead> <b>Mein Head</b></thead>
-        <caption><b>Meine erste Tabelle</b></caption>
+        <caption><b>Das ist eine Tabelle</b></caption>
         <tbody>
-        <colgroup width="200" span="5"></colgroup>
+        <colgroup width="200  px" span="5"></colgroup>
             <!-- pro Zeile ein tr -->
+
             <tr style="outline: auto">
                 <!--th = tablehead also Spaltenüberschrift -->
-                <th>Stufe 1</th>
-                <th>Stufe 2</th>
-                <th>Stufe 3</th>
-                <th>Stufe 4</th>
-                <th>Stufe 5</th>
+                <th>LfdNr.</th>
+                <th>DG</th>
+                <th>Name</th>
+                <th>TSK</th>
+
             </tr>
             <tr style="outline: auto">
                 <!-- td = Datenfeld -->
-                <td align="center">Hier das ist das erste Datenfeld</td>
-                <td align="center">Das hier ist das zweite Datenfeld</td>
-                <td align="center">Und zum Schluss ist hier das dritte Datenfeld</td>
+                <td align="center">1</td>
+                <td rowspan="5" align="center">OFR</td>
+                <td align="center">Dosenkohl</td>
+                <td align="center">Heer </td>
 
             </tr>
+        <tr style="outline: auto">
+            <!-- td = Datenfeld -->
+            <td align="center">2</td>
 
-            <tr style="outline: auto">
-                <td align="center">4</td>
-                <td align="center">5</td>
-                <td align="center">6</td>
+            <td align="center">Kohlgemüse</td>
+            <td align="center">Heer </td>
 
-            </tr>
+        </tr>
+
+
 
 
         </tbody>
