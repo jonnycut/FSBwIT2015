@@ -65,7 +65,7 @@ public class Autos_einlesen {
                 //String name = zeilen.get(index-1);
 
                 datenSatz.append("Ort:"+ zeilen.get(index)+"\n"+"Auto:"+ zeilen.get(index-1)+"\n");
-
+//change
 
 
 
