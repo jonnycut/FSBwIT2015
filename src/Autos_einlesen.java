@@ -20,15 +20,15 @@ public class Autos_einlesen {
         List<String> zeilen = new ArrayList<>();
 
         String ez ="EZ([0][1-9]|[1][0-2])[/]\\d{4}";
-        String hu ="HU([0][1-9]|[1][0-2])[/]\\d{4}";
-        String anbieter ="([hH]ändler|[pP]rivat)";
+        String hu ="HU(([0][1-9]|[1][0-2])[/]\\d{4})|neu";
+        String anbieter ="([hH]ändler|[pP]rivat.*)";
         String art="([kK]leinwagen|[cC]abrio[.]*|[kK]ombi|[lL]imousine|[gG]eländewagen[.]*|[sS]portwagen[.]*|[vV]an[.]*|[aA]ndere)";
         String km = "\\d* ([kK][mM])";
         String leistung ="\\d{3} [kKpP][wWsS]";
         String preis = "\\d+ [€]";
-        String kraftstoff="([bB]enzin|[dD]iesel)";
+        String kraftstoff = "([bB]enzin)|([eE]lektro)|([dD]iesel)|([aA]utogas)|([eE]rdgas)|([wW]asserstoff)|([Hh]ybrid)|([Ee]thanol)";
         String schlatung="([sS]chalt[.]*|[aA]uto[.]*)";
-        String unfall ="([uU]nfall[.]*|)";
+        String unfall =".*[uU]nfall.*";
 
 
         for(int i=0;i<32;i++){
@@ -59,47 +59,45 @@ public class Autos_einlesen {
             String ort = zeilen.get(index);
 
 
-            if (ort.matches("[A-Z]{2}[ ]?[-][ ]?\\d+[ ]?[A-Za-zÜÄÖüäöß]?[.]*")) {
+            if (ort.matches("^DE( )?-( )?\\d{5}( )?[A-ZÜÄÖ][a-züäö]*")) {
+                //ToDo: Klasse Autos bauen und Objekte aus den gefundenen Autos erzeugen!
 
-
-                //String name = zeilen.get(index-1);
-
-                datenSatz.append("Ort:"+ zeilen.get(index)+"\n"+"Auto:"+ zeilen.get(index-1)+"\n");
-//change
-
+               datenSatz.append("Ort:\t\t" + zeilen.get(index) + "\n" + "Auto:\t\t" + zeilen.get(index - 1) + "\n");
 
 
                 for (int i=index+1; ;i++) {
 
                     String zeile = zeilen.get(i);
-                    if (zeile.startsWith("Finanzierung, Versicherung"))
+                    if (zeile.startsWith("Finanzierung")) {
+                        datenSatz.append("\n------------------------------------------------------------------\n");
                         break;
-                    else
+                    }else
                         if(zeile.matches(ez))
-                            datenSatz.append("EZ:" + zeile +"\n");
+                            datenSatz.append("EZ:\t\t" + zeile +"\n");
                         if(zeile.matches(hu))
-                            datenSatz.append("HU:"+zeile+"\n");
+                            datenSatz.append("HU:\t\t"+zeile+"\n");
                         if(zeile.matches(anbieter))
-                            datenSatz.append("Anbieter:"+zeile+"\n");
+                            datenSatz.append("Anbieter:\t"+zeile+"\n");
                         if(zeile.matches(art))
-                            datenSatz.append("Art"+zeile+"\n");
+                            datenSatz.append("Art:\t\t"+zeile+"\n");
                         if(zeile.matches(km))
-                            datenSatz.append("Km:"+zeile+"\n");
+                            datenSatz.append("Km:\t\t"+zeile+"\n");
                         if(zeile.matches(leistung))
-                            datenSatz.append("Leistung"+zeile+"\n");
+                            datenSatz.append("Leistung:\t\t"+zeile+"\n");
                         if(zeile.matches(preis))
-                            datenSatz.append("Preis:"+zeile+"\n");
+                            datenSatz.append("Preis:\t\t"+zeile+"\n");
                         if(zeile.matches(kraftstoff))
-                            datenSatz.append("Kraftstoff:"+zeile+"\n");
+                            datenSatz.append("Kraftstoff:\t"+zeile+"\n");
                         if(zeile.matches(schlatung))
                             datenSatz.append("Schaltung:"+zeile+"\n");
                         if(zeile.matches(unfall))
-                            datenSatz.append("Unfall:"+zeile+"\n");
+                            datenSatz.append("Unfall:\t\t"+zeile+"\n");
+
                 }
             }
 
             System.out.println(datenSatz);
-            System.out.println("------------------------------------------------------------------");
+
 
         }
 
