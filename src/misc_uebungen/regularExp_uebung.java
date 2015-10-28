@@ -1,3 +1,5 @@
+package misc_uebungen;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;

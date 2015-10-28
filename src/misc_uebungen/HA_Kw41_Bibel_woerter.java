@@ -1,3 +1,5 @@
+package misc_uebungen;
+
 import sun.awt.image.ImageWatched;
 
 import java.io.BufferedReader;
