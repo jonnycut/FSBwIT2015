@@ -18,7 +18,7 @@ public class Autos_einlesen {
         //StringBuilder datenSatz = new StringBuilder();
 
         List<String> zeilen = new ArrayList<>();
-        Set<Auto> autoListe= new HashSet<>();
+        Set<Auto> autoListe = new HashSet<>();
 
         String ez = "^(EZ|ez)\\s?([0][1-9]|[1][0-2])[/]\\d{2,4}";
         String hu = "HU\\s*(([0][1-9]|[1][0-2])[/]\\d{4})|neu";
@@ -35,7 +35,7 @@ public class Autos_einlesen {
         String huA = "keine Angabe";
         String anbieterA = "keine Angabe";
         String artA = "keine Angabe";
-        String kmA="-1";
+        String kmA = "-1";
         String leistungA = "keine Angabe";
         String preisA = "keine Angabe";
         String kraftstoffA = "keine Angabe";
@@ -76,7 +76,7 @@ public class Autos_einlesen {
             if (ort.matches("^DE( )?-( )?\\d{5}( )?[A-ZÜÄÖ][a-züäö]*")) {
 
                 ortA = zeilen.get(index);
-                nameA = zeilen.get(index -1);
+                nameA = zeilen.get(index - 1);
                 //datenSatz.append("Ort:\t\t" + zeilen.get(index) + "\n" + "Auto:\t\t" + zeilen.get(index - 1) + "\n");
 
 
@@ -85,7 +85,7 @@ public class Autos_einlesen {
                     String zeile = zeilen.get(i);
                     if (zeile.startsWith("Finanzierung")) {
 
-                        autoListe.add(new Auto(ezA,huA,anbieterA,artA,kmA,leistungA,preisA,kraftstoffA,schaltungA,unfallA,nameA,ortA));
+                        autoListe.add(new Auto(ezA, huA, anbieterA, artA, kmA, leistungA, preisA, kraftstoffA, schaltungA, unfallA, nameA, ortA));
                         ezA = "keine Angabe";
                         huA = "keine Angabe";
                         anbieterA = "keine Angabe";
@@ -101,36 +101,37 @@ public class Autos_einlesen {
 
                         //datenSatz.append("\n------------------------------------------------------------------\n");
                         break;
-                    } else if (zeile.matches(ez))
+                    } else if (zeile.matches(ez)) {
                         ezA = zeile;
                         //datenSatz.append("EZ:\t\t" + zeile + "\n");
-                    if (zeile.matches(hu))
+                    } else if (zeile.matches(hu)) {
                         huA = zeile;
                         //datenSatz.append("HU:\t\t" + zeile + "\n");
-                    if (zeile.matches(anbieter))
+                    } else if (zeile.matches(anbieter)) {
                         anbieterA = zeile;
                         //datenSatz.append("Anbieter:\t" + zeile + "\n");
-                    if (zeile.matches(art))
+                    } else if (zeile.matches(art)) {
                         artA = zeile;
                         //datenSatz.append("Art:\t\t" + zeile + "\n");
-                    if (zeile.matches(km))
+                    } else if (zeile.matches(km)) {
                         kmA = zeile;
                         //datenSatz.append("Km:\t\t" + zeile + "\n");
-                    if (zeile.matches(leistung))
+                    } else if (zeile.matches(leistung)) {
                         leistungA = zeile;
                         //datenSatz.append("Leistung:\t\t" + zeile + "\n");
-                    if (zeile.matches(preis))
+                    } else if (zeile.matches(preis)) {
                         preisA = zeile;
                         //datenSatz.append("Preis:\t\t" + zeile + "\n");
-                    if (zeile.matches(kraftstoff))
+                    } else if (zeile.matches(kraftstoff)) {
                         kraftstoffA = zeile;
                         //datenSatz.append("Kraftstoff:\t" + zeile + "\n");
-                    if (zeile.matches(schlatung))
+                    } else if (zeile.matches(schlatung)) {
                         schaltungA = zeile;
                         //datenSatz.append("Schaltung:" + zeile + "\n");
-                    if (zeile.matches(unfall))
+                    } else if (zeile.matches(unfall)) {
                         unfallA = zeile;
-                    //datenSatz.append("Unfall:\t\t" + zeile + "\n");
+                        //datenSatz.append("Unfall:\t\t" + zeile + "\n");
+                    }
 
                 }
             }
@@ -140,9 +141,9 @@ public class Autos_einlesen {
 
         }
 
-        for(Auto a: autoListe){
+        for (Auto a : autoListe) {
             System.out.println(a);
-            System.out.println("---------------------------------------------");
+            System.out.println("----------------------------------------------------------------------------------------");
         }
 
     }//end Main
