@@ -24,10 +24,10 @@ public class Autos_einlesen {
         String hu = "HU\\s*(([0][1-9]|[1][0-2])[/]\\d{4})|neu";
         String anbieter = "([hH]ändler|[pP]rivat.*)";
         String art = "([kK]leinwagen|[cC]abrio[.]*|[kK]ombi|[lL]imousine|[gG]eländewagen[.]*|[sS]portwagen[.]*|[vV]an[.]*|[aA]ndere)";
-        String km = "(\\d{1,3}\\.*)?(\\d{1,3})?\\s?[kmKM].*";
-        String leistung = "\\d{3} [kKpP][wWsS]";
+        String km = "(\\d{1,3}\\.*)?(\\d{1,3})?\\s?[kK][mM].*";
+        String leistung = "\\d{1,3} kW \\(\\d{1,3} PS\\).*";
         String preis = ".+\\s?€";
-        String kraftstoff = "([bB]enzin)|([eE]lektro)|([dD]iesel)|([aA]utogas)|([eE]rdgas)|([wW]asserstoff)|([Hh]ybrid)|([Ee]thanol)";
+        //String kraftstoff = "([bB]enzin)|([eE]lektro)|([dD]iesel)|([aA]utogas)|([eE]rdgas)|([wW]asserstoff)|([Hh]ybrid)|([Ee]thanol)";
         String schlatung = "([sS]chalt.*|[aA]uto.*)";
         String unfall = ".*[uU]nfall.*";
 
@@ -77,6 +77,7 @@ public class Autos_einlesen {
 
                 ortA = zeilen.get(index);
                 nameA = zeilen.get(index - 1);
+                List<String> extras = new LinkedList<>();
                 //datenSatz.append("Ort:\t\t" + zeilen.get(index) + "\n" + "Auto:\t\t" + zeilen.get(index - 1) + "\n");
 
 
@@ -85,7 +86,7 @@ public class Autos_einlesen {
                     String zeile = zeilen.get(i);
                     if (zeile.startsWith("Finanzierung")) {
 
-                        autoListe.add(new Auto(ezA, huA, anbieterA, artA, kmA, leistungA, preisA, kraftstoffA, schaltungA, unfallA, nameA, ortA));
+                        autoListe.add(new Auto(ezA, huA, anbieterA, artA, kmA, leistungA, preisA, kraftstoffA, schaltungA, unfallA, nameA, ortA, extras));
                         ezA = "keine Angabe";
                         huA = "keine Angabe";
                         anbieterA = "keine Angabe";
@@ -117,20 +118,25 @@ public class Autos_einlesen {
                         kmA = zeile;
                         //datenSatz.append("Km:\t\t" + zeile + "\n");
                     } else if (zeile.matches(leistung)) {
-                        leistungA = zeile;
+                        leistungA = zeile.split(",")[0];
+                        kraftstoffA = zeile.split(", ")[1];
                         //datenSatz.append("Leistung:\t\t" + zeile + "\n");
                     } else if (zeile.matches(preis)) {
                         preisA = zeile;
                         //datenSatz.append("Preis:\t\t" + zeile + "\n");
-                    } else if (zeile.matches(kraftstoff)) {
+
+                   /* } else if (zeile.matches(kraftstoff)) {
                         kraftstoffA = zeile;
-                        //datenSatz.append("Kraftstoff:\t" + zeile + "\n");
+                        datenSatz.append("Kraftstoff:\t" + zeile + "\n");*/
+
                     } else if (zeile.matches(schlatung)) {
                         schaltungA = zeile;
                         //datenSatz.append("Schaltung:" + zeile + "\n");
                     } else if (zeile.matches(unfall)) {
                         unfallA = zeile;
                         //datenSatz.append("Unfall:\t\t" + zeile + "\n");
+                    }else{
+                        extras.add(zeile);
                     }
 
                 }

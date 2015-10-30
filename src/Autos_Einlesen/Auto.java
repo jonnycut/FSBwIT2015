@@ -1,9 +1,11 @@
 package Autos_Einlesen;
 
+import java.util.List;
+
 /**
  * Created by JonnyCut on 28.10.2015.
  */
-public class Auto {
+public class Auto implements Comparable<Auto> {
 
     private String ez;
     private String hu;
@@ -17,9 +19,10 @@ public class Auto {
     private String unfall;
     private String name;
     private String ort;
+    private List<String> extras;
 
 
-    public Auto(String ez, String hu, String anbieter, String art, String km, String leistung, String preis, String kraftstoff, String schlatung, String unfall, String name, String ort) {
+    public Auto(String ez, String hu, String anbieter, String art, String km, String leistung, String preis, String kraftstoff, String schlatung, String unfall, String name, String ort, List extras) {
         this.ez = ez;
         this.hu = hu;
         this.anbieter = anbieter;
@@ -32,6 +35,7 @@ public class Auto {
         this.unfall = unfall;
         this.name = name;
         this.ort = ort;
+        this.extras=extras;
     }
 
     public String getAnbieter() {
@@ -87,7 +91,13 @@ public class Auto {
                 "\nKraftstoff:\t"+this.kraftstoff+
                 "\nSchaltung:\t"+this.schlatung+
                 "\nUnfall:\t\t"+this.unfall+
-                "\nPreis:\t\t"+this.preis;
+                "\nExtras: \n"+this.extras+
+                "\n\n\nPreis:\t\t"+this.preis;
     }
 
+
+    @Override
+    public int compareTo(Auto o) {
+        return this.ez.compareTo(o.getEz());
+    }
 }
