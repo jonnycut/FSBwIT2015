@@ -1,21 +1,67 @@
-#outline{
+.outline{
     border: solid 2px black;
-    padding: 25px;
+    margin: 10px auto;
+
 }
 
-#outline div{
+.gruenBox{
     font-size: 30px;
     text-align: center;
+    margin: 5px;
 
     background-color: green;
     border: solid 2px red;
-    margin: 20px;
+    border-radius: 5px;
+
+
 }
 #box1{
-    width: 80em;
+    width: 80%;
+
+
+
 
 }
 
 #box2{
-    width: 48em;
+    width: 45%;
+    float: left;
+    margin-right: auto;
+
+
+
+
+
+}
+
+#box3{
+    width: 45%;
+    float: left;
+
+
+
+
+
+
+}
+
+#box4{
+    width: 60%;
+    clear: both;
+    margin: auto;
+    margin-bottom: 5px;
+
+
+
+
+}
+#bild-top{
+    height: 150px;
+    width: 150px;
+    float: left;
+}
+#bild-middle{
+    height: 150px;
+    width: 150px;
+    float: right;
 }
