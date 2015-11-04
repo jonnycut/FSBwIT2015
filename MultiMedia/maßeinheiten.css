@@ -1,22 +1,25 @@
 .outline{
-    border: solid 2px black;
-    margin: 10px auto;
+    border: solid 1px black;
+    margin: 1% auto;
+    padding: 1%;
 
 }
 
 .gruenBox{
     font-size: 30px;
     text-align: center;
-    margin: 5px;
+    margin: 0.5%;
 
     background-color: green;
-    border: solid 2px red;
+    border: solid 1px red;
     border-radius: 5px;
 
 
 }
 #box1{
     width: 80%;
+    margin: auto
+;
 
 
 
@@ -24,9 +27,10 @@
 }
 
 #box2{
-    width: 45%;
+    width: 48%;
     float: left;
-    margin-right: auto;
+
+
 
 
 
@@ -35,8 +39,9 @@
 }
 
 #box3{
-    width: 45%;
+    width: 48%;
     float: left;
+
 
 
 
@@ -49,7 +54,7 @@
     width: 60%;
     clear: both;
     margin: auto;
-    margin-bottom: 5px;
+
 
 
 
