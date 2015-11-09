@@ -1,4 +1,9 @@
-body{
+*{
+    margin: 0;
+    padding: 0;
+}
+
+#outline{
     height: 50%;
     width: 75%;
     margin: 0px auto auto auto;
@@ -7,30 +12,56 @@ body{
 
 li{
     list-style: none;
-    border: solid 1px;
+
     float: left;
+    width: 20%;
+    text-align: center;
+
 
     margin: 0.5%;
-    margin-right: 1%;
-    padding-top: 1.67%;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 1.67%;
-    background-color: lightgrey;
+
+
+
+
 
 }
+
+a{
+    text-decoration: none;
+    display: block;
+    border: solid 1px;
+    background-color: lightgrey;
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
+
+ul{
+    padding: 0.4%;
+}
+
+
 section{
     display: inline-block;
     background-color: lightgray;
-    clear: both;
+    float: left;
     width: 75%;
     margin: 1%;
 }
+article{
+    margin-bottom: 5%;
+    padding: 2%;
+
+}
 aside{
     background-color: lightgray;
-    display: inline-block;
+    float: left;
+    padding: 5%;
+    padding-top: 1%;
+    padding-bottom: 1%;
     margin: 1%;
-    width: 20%;
+
+
+
     vertical-align: top;
 
 }
@@ -40,6 +71,7 @@ header > h1{
     text-align: center;
     margin-top: 0px;
     margin-bottom: 0;
+    padding: 0.5%;
 
 }
 article > header > h1{
@@ -47,5 +79,14 @@ article > header > h1{
     clear: both;
     text-align: left;
 
+}
+
+div>footer{
+    margin: 0;
+    background-color: lightgray;
+    text-align: center;
+    padding: 1%;
+    vertical-align: middle;
+    clear: both;
 }
 
