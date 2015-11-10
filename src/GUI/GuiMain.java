@@ -24,11 +24,16 @@ public class GuiMain {
         addLable(anzeige,"WEST",Color.red,50,BorderLayout.WEST);
         addLable(anzeige,"CENTER",Color.gray,50,BorderLayout.CENTER );*/
 
-        addLableNoT(anzeige,new ImageIcon("C:\\Users\\knapret\\Pictures\\Grumpy-cat.jpg"),BorderLayout.CENTER);
-        addLableNoT(anzeige,new ImageIcon("C:\\Users\\knapret\\Pictures\\grumpy.jpg"), BorderLayout.SOUTH);
-        addLableNoT(anzeige,new ImageIcon("C:\\Users\\knapret\\Pictures\\fuYou.jpg"),BorderLayout.EAST);
-        addLableNoT(anzeige,new ImageIcon("C:\\Users\\knapret\\Pictures\\fuYou.jpg"),BorderLayout.WEST);
-        addLable(anzeige,"How is SOP?",Color.WHITE,60,BorderLayout.NORTH);
+        addLableNoT(anzeige, new ImageIcon("C:\\Users\\knapret\\Pictures\\Grumpy-cat.jpg"), BorderLayout.CENTER);
+        addLableNoT(anzeige, new ImageIcon("C:\\Users\\knapret\\Pictures\\grumpy.jpg"), BorderLayout.SOUTH);
+        addLableNoT(anzeige, new ImageIcon("C:\\Users\\knapret\\Pictures\\fuYou.jpg"), BorderLayout.EAST);
+        addLableNoT(anzeige, new ImageIcon("C:\\Users\\knapret\\Pictures\\fuYou.jpg"), BorderLayout.WEST);
+        addLable(anzeige, "How is SOP?", Color.WHITE, 60, BorderLayout.NORTH);
+
+
+        JList<String> list = new JList<>();
+        
+
 
         anzeige.setVisible(true);
 

@@ -1,10 +1,13 @@
 package Autos_Einlesen;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * Created by JonnyCut on 20.10.2015.
@@ -147,10 +150,31 @@ public class Autos_einlesen {
 
         }
 
-        for (Auto a : autoListe) {
+        /*for (Auto a : autoListe) {
             System.out.println(a);
             System.out.println("----------------------------------------------------------------------------------------");
+        }*/
+        Auto[] autoArray = new Auto[autoListe.size()];
+        int i=0;
+        for(Auto a : autoListe){
+
+            autoArray[i] = a;
+            i++;
+
         }
+
+        JList<Auto> autoJ = new JList<>(autoArray);
+
+
+        JScrollPane scrollPane = new JScrollPane();
+        scrollPane.setViewportView(autoJ);
+
+        JFrame box = new JFrame();
+        box.add(scrollPane);
+        box.setSize(1000,1000);
+        box.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        box.setVisible(true);
+
 
     }//end Main
 }
