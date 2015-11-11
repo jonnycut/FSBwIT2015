@@ -19,7 +19,7 @@ public class GUIListenerMain     {
         bg.setHorizontalAlignment(SwingConstants.CENTER);
 
 
-        JButton farbe = new JButton("Change");
+        JButton farbe = new JButton("Rot");
         farbe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

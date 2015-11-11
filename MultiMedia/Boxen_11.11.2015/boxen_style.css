@@ -1,0 +1,27 @@
+div{
+    margin: auto ;
+    width: 500px;
+    height: 500px;
+    border: solid;
+    border-color: red;
+}
+.inline{
+
+    width: 240px;
+    height: 240px;
+    background-color: lightgreen;
+    border: solid 1px red;
+
+    float: left;
+    margin-left: 4px;
+    margin-right: 4px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    text-align: center;
+
+
+}
+p{
+    margin: 50%;
+}
+

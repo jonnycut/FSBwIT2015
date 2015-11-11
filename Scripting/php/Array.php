@@ -1,5 +1,5 @@
 
-<!-- ToDo: Ausgabe richtig anpassen -->
+<!-- ToDo: Ausgabe richtig anpassen 11.11.2015 DONE-->
 
 <?php
 $array_autos = array(
@@ -15,28 +15,32 @@ $array_autos = array(
 
 );
 
+$array_autos["Alfred"]["Porsche"]= ["Schwarz","12 Jahre","280PS"];
+
+/*echo "<pre>";         --> Zeigt die Variable ohne foreach komplett an
+var_dump($array_autos);
+echo "</pre>"*/;
 
 
 foreach ($array_autos as $key => $value) {
     echo "<ul><li>$key</li>
-            <ol><li>";
+            <ol>";
 
 
             foreach ($value as $key => $value){
-                echo "$key <br>";
+                echo "<li> $key <br></li>";
+                echo"<ul>";
                 foreach($value as $value){
 
-                    echo "$value <br>";
+                    echo "<li>$value <br></li>";
                 }
+                echo "</ul>";
             }
 
 
          echo"
-            </li>
-                <ul><li>
 
-
-                </li>
+                <ul>
             </ol>
                 </ul>
           </ul>";
