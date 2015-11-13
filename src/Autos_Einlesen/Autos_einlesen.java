@@ -155,13 +155,8 @@ public class Autos_einlesen {
             System.out.println("----------------------------------------------------------------------------------------");
         }*/
         Auto[] autoArray = new Auto[autoListe.size()];
-        int i=0;
-        for(Auto a : autoListe){
 
-            autoArray[i] = a;
-            i++;
-
-        }
+        autoListe.toArray(autoArray);
 
         JList<Auto> autoJ = new JList<>(autoArray);
 
@@ -171,7 +166,7 @@ public class Autos_einlesen {
 
         JFrame box = new JFrame();
         box.add(scrollPane);
-        box.setSize(1000,1000);
+        box.setSize((int) autoJ.getPreferredSize().getWidth(),1000);
         box.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         box.setVisible(true);
 
