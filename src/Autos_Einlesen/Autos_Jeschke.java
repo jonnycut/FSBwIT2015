@@ -1,24 +1,24 @@
 package Autos_Einlesen;
-
+import javax.swing.*;
+import javax.swing.text.html.HTML;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
  * Created by KNapret on 13.11.2015.
  */
-public class Autos_Jeschke {
+public class Autos_Jeschke implements Comparable<Auto> {
 
 
-    import javax.swing.*;
-    import javax.swing.text.html.HTML;
-    import java.util.ArrayList;
-    import java.util.Comparator;
-    import java.util.List;
-    import java.util.regex.Matcher;
-    import java.util.regex.Pattern;
+
 
     /**
      * Created by cjaeschke on 23.10.2015.
      */
 
-    public class Auto implements Comparable<Auto> {
+
         private final static Pattern P_ORT = Pattern.compile("(\\w{2,3})\\s-\\s(\\d{5})\\s(\\w+.*)");
         private final static Pattern P_TYP = Pattern.compile("(Limousine|Geländewagen / Pickup|Kleinwagen|Cabrio / Roadster|Van / Minibus|Kombi|Sportwagen / Coupé|Andere)");
         private final static Pattern P_SCHALTUNG = Pattern.compile("(Schaltgetriebe|Halbautomatik|Automatik)");
@@ -267,5 +267,5 @@ public class Autos_Jeschke {
 
             return text + "</html>";
         }
-    }
 }
+

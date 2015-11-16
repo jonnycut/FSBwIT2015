@@ -21,7 +21,51 @@ div{
 
 
 }
+/*p:after{
+    content: "oder nicht";
+    -> nach jede p Element wird "[TEXT]" eubfefügt
+}
+
+a:link 	{...}		 unbesuchter Link
+a:visited 	{...}		bereits besuchter Link
+a:hover 	{...}		 Maus über dem Element
+a:active 	{...}		 betätigter Link
+*/
+
+
+
+.inline:hover{
+    background-color: red;
+}
+#eins{
+
+    position: relative;
+    top: 50px;
+    left: 50px;
+    z-index: 4;
+
+}
+#zwei{
+    position: relative;
+    top: 70px;
+    right: 40px;
+
+    z-index: 3;
+
+}
+#drei{
+    position: relative;
+    bottom: 50px;
+    left: 80px;
+    z-index: 2;
+}
+#vier{
+    position: relative;
+    z-index: 1;
+}
 p{
     margin: 50%;
 }
+
+
 
