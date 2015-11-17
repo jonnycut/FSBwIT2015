@@ -84,14 +84,14 @@ public class Auto implements Comparable<Auto> {
        String ret = "<html>";
 
         ret += "<br>"+
-                    "Auto:\t\t"+this.name+
-                    "<br>Ort:\t\t"+this.ort+
+                    "MobileGUI.Auto:\t\t"+this.name+
+                    "<br>MobileGUI.Ort:\t\t"+this.ort+
                     "<br>Km:\t\t\t"+this.km+
                     "<br>Art:\t\t"+this.art+
                     "<br>Anbieter:\t"+this.anbieter+
                     "<br>EZ:\t\t\t"+this.ez+
                     "<br>HU:\t\t\t"+this.hu+
-                    "<br>Leistung:\t"+this.leistung+
+                    "<br>MobileGUI.Leistung:\t"+this.leistung+
                     "<br>Kraftstoff:\t"+this.kraftstoff+
                     "<br>Schaltung:\t"+this.schlatung+
                     "<br>Unfall:\t\t"+this.unfall+
@@ -132,9 +132,9 @@ public class Auto implements Comparable<Auto> {
         }
     };
 
-   /* public static final Comparator<Auto> SORT_PREIS = new Comparator<Auto>() { --> Strings, die Zahlen sind, müssen noch in INT geparsed werden
+   /* public static final Comparator<MobileGUI.Auto> SORT_PREIS = new Comparator<MobileGUI.Auto>() { --> Strings, die Zahlen sind, müssen noch in INT geparsed werden
         @Override
-        public int compare(Auto o1, Auto o2) {
+        public int compare(MobileGUI.Auto o1, MobileGUI.Auto o2) {
             if(o1 == null && o2 == null) return 0;
             if(o1 == null) return 1;
             if(02 == null) return -1;

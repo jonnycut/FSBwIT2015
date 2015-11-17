@@ -81,7 +81,7 @@ public class Autos_einlesen {
                 ortA = zeilen.get(index);
                 nameA = zeilen.get(index - 1);
                 List<String> extras = new LinkedList<>();
-                //datenSatz.append("Ort:\t\t" + zeilen.get(index) + "\n" + "Auto:\t\t" + zeilen.get(index - 1) + "\n");
+                //datenSatz.append("MobileGUI.Ort:\t\t" + zeilen.get(index) + "\n" + "MobileGUI.Auto:\t\t" + zeilen.get(index - 1) + "\n");
 
 
                 for (int i = index + 1; ; i++) {
@@ -123,7 +123,7 @@ public class Autos_einlesen {
                     } else if (zeile.matches(leistung)) {
                         leistungA = zeile.split(",")[0];
                         kraftstoffA = zeile.split(", ")[1];
-                        //datenSatz.append("Leistung:\t\t" + zeile + "\n");
+                        //datenSatz.append("MobileGUI.Leistung:\t\t" + zeile + "\n");
                     } else if (zeile.matches(preis)) {
                         preisA = zeile;
                         //datenSatz.append("Preis:\t\t" + zeile + "\n");
@@ -150,7 +150,7 @@ public class Autos_einlesen {
 
         }
 
-        /*for (Auto a : autoListe) {
+        /*for (MobileGUI.Auto a : autoListe) {
             System.out.println(a);
             System.out.println("----------------------------------------------------------------------------------------");
         }*/
