@@ -1,3 +1,4 @@
+/*
 package GUI;
 
 import javax.swing.*;
@@ -5,9 +6,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+*/
 /**
  * Created by KNapret on 10.11.2015.
- */
+ *//*
+
 public class GUIListenerMain     {
 
     public static void main(String[] args) {
@@ -47,3 +50,4 @@ public class GUIListenerMain     {
 
     }//endMain
 }//endClass
+*/
