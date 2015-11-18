@@ -262,6 +262,7 @@ public class Auto implements Comparable<Auto> {
 
     public String toString () {
         String re = "<html><pre>";
+        re+="---------------------------------------------------------------------<br><br>";
         re += name != null ? "Name:\t\t" + name + "<br>" : "";
         re += ort != null ? "MobileGUI.Ort:\t\t" + ort + "<br>" : "";
         re += anbieter != null ? "Anbieter:\t" + anbieter + "<br>" : "";

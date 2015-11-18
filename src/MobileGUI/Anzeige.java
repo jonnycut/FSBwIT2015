@@ -140,11 +140,8 @@ public class Anzeige implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         JButton temp = (JButton) e.getSource();
 
-        if(temp.getText().equalsIgnoreCase("exit")){
-            box.setVisible(false);
+        if(temp.getText().equalsIgnoreCase("exit"))
             System.exit(0);
-
-        }
 
         if(nameAuf.isSelected()){
             Collections.sort(speicherAuto, Auto.SORT_NAME);
