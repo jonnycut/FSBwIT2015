@@ -1,3 +1,7 @@
+table{
+    border-collapse: collapse;
+
+}
 
 div{
     border: solid;
@@ -15,8 +19,6 @@ div{
     position: absolute;
     top: 50px;
     left: 50px;
-    z-index: 6;
-    background-color: green;
 }
 
 #zwei{
@@ -24,21 +26,39 @@ div{
     position: absolute;
     top: 50px;
     left: 550px;
-    z-index: 5;
-}
-
-#eins:hover {
-    width: 600px;
 
 }
+#drei{
+    width: 400px;
+    height: 400px;
+    position: absolute;
+    top: 500px;
+    left: 550px;
+
+    border: solid 2px;
+}
+
+
+td{
+    padding: 50px;
+}
+
+
+
+
 
 
 
 a:link{color: blue}
 a:visited{color:red}
 a:hover{color: green}
-p:nth-child(3)>i{
+p:nth-child(3n+2)>i{
     color: red;
+
+}
+
+td:nth-child(odd){
+    background-color: black;
 }
 
 

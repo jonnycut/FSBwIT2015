@@ -69,6 +69,17 @@ public class Auto implements Comparable<Auto> {
         }
     };
 
+    public final static Comparator<Auto> SORT_NAME_RE = new Comparator<Auto>() {
+        @Override
+        public int compare(Auto o1, Auto o2) {
+            if (o1 == null && o2 == null) return 0;
+            if (o1 == null) return 1;
+            if (o2 == null) return -1;
+            return o2.name.compareTo(o1.name);
+        }
+    };
+
+
     public final static Comparator<Auto> SORT_KMSTAND = new Comparator<Auto>() {
         public int compare(Auto o1, Auto o2) {
             if (o1 == null && o2 == null) return 0;
