@@ -1,3 +1,9 @@
 <section>
-    <h1>Dies ist die Überschrift des Contents</h1>
+    <?php
+
+
+            require 'pages/'.$currentPage.'.php';
+
+
+    ?>
 </section>

@@ -2,8 +2,15 @@
     $pages= [
         'home' => 'Allgemeines',
         'lists' => 'Listen',
-        'tables' => 'Tabellen'
-    ]
+        'tables' => 'Tabellen',
+        'impressum' => 'Impressum'
+    ];
+
+if(isset($_GET['page'])){
+    $currentPage = $_GET['page'];
+}else{
+    $currentPage = 'home';
+}
 ?>
 
 <!DOCTYPE html>
