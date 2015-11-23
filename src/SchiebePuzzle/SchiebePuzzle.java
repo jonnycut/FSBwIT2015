@@ -10,14 +10,15 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/**
- * Created by JonnyCut on 17.11.2015.
- */
+
+
+
 public class SchiebePuzzle implements ActionListener {
     private static final int XX = 4;
     private static final int YY = 3;
-    private JButton[] buttons = new JButton[XX*YY];
-    private int lastButton = 0;
+    private PuzzButton[][] buttons = new PuzzButton[YY][XX];
+    private int lastButtonX = 0;
+    private int lastButtonY =0;
     private Icon lastIcon = null;
     private boolean firstClick = true;
 
@@ -32,21 +33,26 @@ public class SchiebePuzzle implements ActionListener {
         JFrame jF = new JFrame("SchiebePuzzle");
         jF.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        jF.setLayout(new GridLayout(YY,XX));
+        jF.setLayout(new GridLayout(YY,XX)); //ggf zu ändern
         try{
             BufferedImage fuYou = ImageIO.read(new File("fuYou.jpg"));
             int w = fuYou.getWidth();
             int h = fuYou.getHeight();
             for(int y=0; y<YY; y++)
                 for(int x=0;x<XX;x++){
-                    buttons[y*XX+x] = new JButton(
+                    buttons[y][x] = new PuzzButton(
                             new ImageIcon(fuYou.getSubimage(x*(w/XX),y*(h/YY),w/XX,h/YY))
                     );
-                    buttons[y*XX+x].setBorder(new LineBorder(Color.BLACK,1));
-                    buttons[y*XX+x].setActionCommand("" + (y * XX + x));
-                    buttons[y*XX+x].setName("" + (y * XX + x));
-                    buttons[y*XX+x].addActionListener(this);
-                    jF.add(buttons[y*XX+x]);
+                    if(y==0|x==0|x==XX|y==YY){
+                        buttons[y][x].setIsBorder(true);
+                    }
+                    buttons[y][x].setBorder(new LineBorder(Color.BLACK, 1));
+                    buttons[y][x].setActionCommand("" + x + y);
+                    buttons[y][x].setName("" + x + y);
+                    buttons[y][x].setPosY(y);
+                    buttons[y][x].setPosX(x);
+                    buttons[y][x].addActionListener(this);
+                    jF.add(buttons[y][x]);
                 }
 
         } catch (IOException e) {
@@ -61,29 +67,39 @@ public class SchiebePuzzle implements ActionListener {
 
     private boolean isDone(){
 
-        for(JButton b : buttons){
-            if(!b.getName().equals(b.getActionCommand()))
-                return false;
+        for(JButton[] b : buttons){
+            for(JButton button : b){
+                if(!button.getName().equals(button.getActionCommand()))
+                    return false;
+            }
+
         }
 
         return true;
     };
 
-    private void switchButton(int pos){
-        buttons[lastButton].setIcon(buttons[pos].getIcon());
-        buttons[pos].setIcon(null);
+    private void switchButton(int posY, int posX){
+        buttons[lastButtonY][lastButtonX].setIcon(buttons[posY][posX].getIcon());
+        buttons[posY][posX].setIcon(null);
 
-       String puffer = buttons[pos].getName();
-        buttons[pos].setName(buttons[lastButton].getName());
-        buttons[lastButton].setName(puffer);
-        lastButton = pos;
+       String puffer = buttons[posY][posX].getName();
+        buttons[posY][posX].setName(buttons[(int) lastButtonY][lastButtonX].getName());
+        buttons[lastButtonY][lastButtonX].setName(puffer);
+        buttons[posY][posX].setIsLast(true);
+        lastButtonX= posX;
+        lastButtonY= posY;
 
     };
 
-    private boolean inTouch(int pos){
+    private boolean inTouch(int posY, int posX){
 
-        return ((pos % XX == lastButton%XX)&&Math.abs(pos/XX-lastButton/XX)<2)||
-                ((pos/YY==lastButton/XX)&& Math.abs(pos % XX-lastButton%XX)<2);
+       if(buttons[posY][posX].getIsBorder()){
+
+
+        }
+
+        /*return ((pos % XX == lastButton%XX)&&Math.abs(pos/XX-lastButton/XX)<2)||
+                ((pos/YY==lastButton/XX)&& Math.abs(pos % XX-lastButton%XX)<2);*/
 
     };
 
@@ -93,25 +109,31 @@ public class SchiebePuzzle implements ActionListener {
 
         if(firstClick){
             firstClick = false;
-            lastIcon = buttons[0].getIcon();
-            buttons[0].setIcon(null);
+            lastIcon = buttons[0][0].getIcon();
+            buttons[0][0].setIcon(null);
             for(int i=0;i<10000;i++) {
-                int zufall = (int) (Math.random() * XX * YY);
-                switchButton(zufall);
+                int zufallY = (int)((Math.random()*YY)+0);
+                int zufallX = (int) ((Math.random()*XX)+0);
+                switchButton(zufallY, zufallX);
             }
 
-            while(lastButton % XX != 0)
+            /*while(lastButton % XX != 0)
                 switchButton(lastButton-1);
-            while (lastButton / XX != 0)
-                switchButton(lastButton-XX);
+            while (lastButton != "00")
+                switchButton(lastButton-XX);*/
 
         }else {
-            int pos = Integer.parseInt(e.getActionCommand());
-            switchButton(pos);
+            PuzzButton tmp = (PuzzButton) e.getSource();
+             int posY = tmp.getPosY();
+             int posX = tmp.getPosX();
+
+            switchButton(posY,posX);
             if(isDone()){
-                buttons[0].setIcon(lastIcon);
+                buttons[0][0].setIcon(lastIcon);
                 firstClick = true;
             }
+
+
 
 
         }

@@ -138,10 +138,15 @@ public class Anzeige implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        JButton temp = (JButton) e.getSource();
 
-        if(temp.getText().equalsIgnoreCase("exit"))
+
+        if(e.getActionCommand().equalsIgnoreCase("exit"))
             System.exit(0);
+            //getActionCommand() liefert entweder das über setActionCommand() gesetzte zurück,
+            //wenn dies nicht explizit gesetzt ist, wird "text" zurückgeliefert. (-->das gleiche wie get.Text)
+            //über die Abfrage von getActionCommand() spart man sich die tmp Variable (-->Jbutton tmp = (JButton) e.getSource())
+
+
 
         if(nameAuf.isSelected()){
             Collections.sort(speicherAuto, Auto.SORT_NAME);

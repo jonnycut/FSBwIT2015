@@ -1,0 +1,27 @@
+
+table{
+    margin: auto;
+    border-collapse: collapse;
+
+
+}
+
+tr:nth-child(odd)>td:nth-child(odd){
+    background-color: black;
+}
+tr:nth-child(even)>td:nth-child(even){
+    background-color: black;
+
+}
+
+td{
+    width: 100px;
+    height: 100px;
+    border: 1px black solid;
+    border-collapse: collapse;
+
+}
+td:hover{
+    background-color: red;
+}
+
