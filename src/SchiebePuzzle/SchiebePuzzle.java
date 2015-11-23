@@ -43,9 +43,7 @@ public class SchiebePuzzle implements ActionListener {
                     buttons[y][x] = new PuzzButton(
                             new ImageIcon(fuYou.getSubimage(x*(w/XX),y*(h/YY),w/XX,h/YY))
                     );
-                    if(y==0|x==0|x==XX|y==YY){
-                        buttons[y][x].setIsBorder(true);
-                    }
+
                     buttons[y][x].setBorder(new LineBorder(Color.BLACK, 1));
                     buttons[y][x].setActionCommand("" + x + y);
                     buttons[y][x].setName("" + x + y);
@@ -79,29 +77,37 @@ public class SchiebePuzzle implements ActionListener {
     };
 
     private void switchButton(int posY, int posX){
-        buttons[lastButtonY][lastButtonX].setIcon(buttons[posY][posX].getIcon());
-        buttons[posY][posX].setIcon(null);
 
-       String puffer = buttons[posY][posX].getName();
-        buttons[posY][posX].setName(buttons[(int) lastButtonY][lastButtonX].getName());
-        buttons[lastButtonY][lastButtonX].setName(puffer);
-        buttons[posY][posX].setIsLast(true);
-        lastButtonX= posX;
-        lastButtonY= posY;
+        if(inTouch(posY,posX)){
+
+            buttons[lastButtonY][lastButtonX].setIcon(buttons[posY][posX].getIcon());
+            buttons[posY][posX].setIcon(null);
+
+            String puffer = buttons[posY][posX].getName();
+            buttons[posY][posX].setName(buttons[(int) lastButtonY][lastButtonX].getName());
+            buttons[lastButtonY][lastButtonX].setName(puffer);
+
+            lastButtonX= posX;
+            lastButtonY= posY;
+        }
+
 
     };
 
     private boolean inTouch(int posY, int posX){
 
-       if(buttons[posY][posX].getIsBorder()){
-
+       if(posY == lastButtonY && (posX -1 == lastButtonX || posX+1 ==lastButtonX)) {
+           return true;
+       }else if(posX ==lastButtonX && (posY -1 == lastButtonY || posY + 1 ==lastButtonY)){
+            return true;
+            //wenn y = y dann muss x = x +1 | x-1
+           //wenn x = x dann muss y = y+1 | y-1
 
         }
+        return false;
 
-        /*return ((pos % XX == lastButton%XX)&&Math.abs(pos/XX-lastButton/XX)<2)||
-                ((pos/YY==lastButton/XX)&& Math.abs(pos % XX-lastButton%XX)<2);*/
 
-    };
+    }
 
 
     @Override
@@ -116,7 +122,8 @@ public class SchiebePuzzle implements ActionListener {
                 int zufallX = (int) ((Math.random()*XX)+0);
                 switchButton(zufallY, zufallX);
             }
-
+            //ToDo: unwiederrufbare Operationen vermeiden?
+            // funktion klären und abfangen
             /*while(lastButton % XX != 0)
                 switchButton(lastButton-1);
             while (lastButton != "00")
