@@ -1,3 +1,8 @@
 <header>
-    <h1>Dies ist der Head!</h1>
+    <h1>Header</h1>
+    <h2>
+        <?php
+        echo $pages[$currentPage];
+        ?>
+    </h2>
 </header>

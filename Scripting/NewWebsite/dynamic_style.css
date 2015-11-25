@@ -1,6 +1,57 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+
+}
+
 header{
-    color: red;
-    border: solid 3px;
+    font-size: 20px;
+    padding: 0;
+    background-color: bisque;
+
+}
+nav{
+    border-right: 5px solid bisque;
+    padding: 5px 25px 5px 1px ;
+    background-color: white;
+    margin: 0px 5px 0px 0px;
+    flex: 1;
+    min-width: 150px;
 
 
+}
+
+table{
+    border: 3px double black;
+    border-collapse: collapse;
+    margin-top: 5px;
+}
+
+td{
+    border: 2px solid black;
+    padding: 2px;
+    margin: 0;
+}
+section{
+    flex: 4;
+
+}
+
+form{
+    margin: 5px;
+}
+#main{
+    display: flex;
+    flex-flow: row;
+
+
+    background-color: white;
+}
+
+
+footer{
+    clear: both;
+    background-color: bisque;
 }

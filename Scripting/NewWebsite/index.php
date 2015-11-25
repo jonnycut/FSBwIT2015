@@ -3,10 +3,11 @@
         'home' => 'Allgemeines',
         'lists' => 'Listen',
         'tables' => 'Tabellen',
-        'impressum' => 'Impressum'
+        'impressum' => 'Impressum',
+        'formulare' => 'Formulare'
     ];
 
-if(isset($_GET['page'])){
+if(isset($_GET['page'])|| isset($pages[$_GET['page']])){
     $currentPage = $_GET['page'];
 }else{
     $currentPage = 'home';
@@ -22,13 +23,18 @@ if(isset($_GET['page'])){
 
 </head>
 <body>
-    <?php
-    require 'head.php';
-    require 'navigation.php';
-    require 'content.php';
-    require 'foot.php';
+
+        <?php
+
+        require 'head.php';
+        echo "<div id='main'>";
+        require 'navigation.php';
+        require 'content.php';
+        echo "</div>";
+        require 'foot.php';
+        ?>
 
 
-    ?>
+
 </body>
 </html>

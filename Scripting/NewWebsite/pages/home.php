@@ -7,4 +7,4 @@
  */
 ?>
 
-<p style="border: solid 5px">Welcome Home</p>
+<p>Welcome Home</p>
