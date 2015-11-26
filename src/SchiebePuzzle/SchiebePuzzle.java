@@ -14,7 +14,7 @@ import java.io.IOException;
 
 
 public class SchiebePuzzle implements ActionListener {
-    private static final int XX = 4;
+    private static final int XX = 2;
     private static final int YY = 3;
     private PuzzButton[][] buttons = new PuzzButton[YY][XX];
     private int lastButtonX = 0;
@@ -65,9 +65,10 @@ public class SchiebePuzzle implements ActionListener {
 
     private boolean isDone(){
 
-        for(JButton[] b : buttons){
-            for(JButton button : b){
-                if(!button.getName().equals(button.getActionCommand()))
+        //hint: name wird umgesetzt, deswegen muss entweder name geprüft werden, oder x / y umgesetzt werden.
+        for(PuzzButton[] b : buttons){
+            for(PuzzButton button : b){
+                if(!button.getYX().equals(button.getActionCommand()))
                     return false;
             }
 

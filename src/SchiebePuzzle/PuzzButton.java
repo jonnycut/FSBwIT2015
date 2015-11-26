@@ -29,6 +29,11 @@ public class PuzzButton extends JButton {
         return posY;
     }
 
+    public String getYX(){
+
+        return "" + posX + posY;
+    }
+
     public void setPosY(int posY) {
         this.posY = posY;
     }
