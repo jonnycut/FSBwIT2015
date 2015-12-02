@@ -4,7 +4,10 @@
         'lists' => 'Listen',
         'tables' => 'Tabellen',
         'impressum' => 'Impressum',
-        'formulare' => 'Formulare'
+        'formulare' => 'Formulare',
+        'index_query' => 'Synonymsuche',
+        'fakultaet' => 'Fakultät berechnen',
+        'gallery' => 'Bilder Gallerie'
     ];
 
 if(isset($_GET['page'])|| isset($pages[$_GET['page']])){
