@@ -1,8 +1,11 @@
 package GUI_Uebungen;
 
 import javax.swing.*;
+import javax.swing.event.ListDataEvent;
 import javax.swing.event.ListDataListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +19,7 @@ public class GuiList implements ListModel {
     private JList datenListe;
     private JPanel buttons;
     private JButton add;
+    private int zahl =1;
 
 
     List<Integer> liste = new ArrayList<>();
@@ -25,6 +29,7 @@ public class GuiList implements ListModel {
     public GuiList() {
 
         baueListe();
+        GuiList.this.add(zahl++);
         window.setVisible(true);
     }
 
@@ -47,14 +52,29 @@ public class GuiList implements ListModel {
         this.add = new JButton("add");
         add.setActionCommand("add");
 
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GuiList.this.add(zahl++);
+            }
+        });
+
         buttons.add(add);
 
         window.add(buttons, BorderLayout.SOUTH);
+
 
         window.setSize(200, 400);
         window.pack();
 
 
+    }
+
+    public void add(Integer zahl){
+        liste.add(zahl);
+
+        for(ListDataListener l: ldls)
+            l.contentsChanged(new ListDataEvent(this,ListDataEvent.CONTENTS_CHANGED,0,liste.size()-1));
     }
 
 
