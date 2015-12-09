@@ -10,7 +10,7 @@
         'gallery' => 'Bilder Gallerie'
     ];
 
-if(isset($_GET['page'])|| isset($pages[$_GET['page']])){
+if(isset($_GET['page'])&& isset($pages[$_GET['page']])){
     $currentPage = $_GET['page'];
 }else{
     $currentPage = 'home';

@@ -9,7 +9,7 @@ if (isset($_GET['zahl'])) {
 
 <form action="" method="get">
     <input type="Search for" value="<?=$zahl?>" name="zahl"><br>
-    <button type="submit">Suche</button>
+    <button type="submit">Berechnen</button>
     <input type="reset" value="Reset">
     <input type="hidden" name="page" value="fakultaet">
 </form>
