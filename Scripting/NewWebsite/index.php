@@ -7,7 +7,8 @@
         'formulare' => 'Formulare',
         'index_query' => 'Synonymsuche',
         'fakultaet' => 'Fakultät berechnen',
-        'gallery' => 'Bilder Gallerie'
+        'gallery' => 'Bilder Gallerie',
+        'pizza' => 'Pizzabestellung'
     ];
 
 if(isset($_GET['page'])&& isset($pages[$_GET['page']])){
