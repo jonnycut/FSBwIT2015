@@ -54,11 +54,16 @@ $karte = [
     <input type="radio" value="groß" name =Größe>groß
 
     <br><br>
+    <?php
+    foreach($karte['Getränk'] as $key => $value){
+        echo "<input type='checkbox' value=$key name='getränk[]'>$key <br>";
 
-    <input type="checkbox" value="Cola" name="getränk[]">Cola <br>
+    }
+    ?>
+   <!-- <input type="checkbox" value="Cola" name="getränk[]">Cola <br>
     <input type="checkbox" value="Fanta" name="getränk[]">Fanta <br>
     <input type="checkbox" value="Spezi" name="getränk[]">Spezi <br>
-    <input type="checkbox" value="Wasser" name="getränk[]">Wasser <br>
+    <input type="checkbox" value="Wasser" name="getränk[]">Wasser <br>-->
 
     <br><br>
     <input type="text" name="tischnummer" placeholder="Tischnummer"><br>

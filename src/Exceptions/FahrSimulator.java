@@ -15,7 +15,7 @@ public class FahrSimulator {
 
             try{
                 auto.fahren();
-                System.out.println("brrr....brrrr");
+                System.out.print("...brrr....brrrr...");
             } catch (TankLeerException e) {
                 auto.tanken();
                 System.out.println("tank leer - ICH TANKE");
