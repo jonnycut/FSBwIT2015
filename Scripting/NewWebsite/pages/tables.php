@@ -31,4 +31,35 @@
     <br>
     <br>
 
+
+    <table>
+        <th>Webtechniken</th>
+        <tr>
+            <td></td>
+            <td>Programmiersprache</td>
+            <td>im Webbrowser</td>
+        </tr>
+        <tr>
+            <td>HTML</td>
+            <td rowspan="2">nein</td>
+            <td rowspan="3">ja</td>
+        </tr>
+
+        <tr>
+            <td>CSS</td>
+        </tr>
+
+        <tr>
+            <td>JavaScript</td>
+            <td rowspan="2">Ja</td>
+        </tr>
+
+        <tr>
+            <td>PHP</td>
+            <td>nein</td>
+        </tr>
+
+
+    </table>
+
 </div>

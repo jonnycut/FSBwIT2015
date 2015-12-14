@@ -8,7 +8,8 @@
         'index_query' => 'Synonymsuche',
         'fakultaet' => 'Fakultät berechnen',
         'gallery' => 'Bilder Gallerie',
-        'pizza' => 'Pizzabestellung'
+        'pizza' => 'Pizzabestellung',
+        'autos' => 'autos'
     ];
 
 if(isset($_GET['page'])&& isset($pages[$_GET['page']])){
