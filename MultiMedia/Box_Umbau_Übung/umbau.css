@@ -1,7 +1,13 @@
+@font-face {
+
+    font-family: 'Indie Flower', cursive;
+}
+
 *{
     margin: 0;
     padding: 0;
 }
+
 
 #outline{
     height: 50%;
@@ -64,6 +70,10 @@ aside{
 
     vertical-align: top;
 
+}
+
+h1{
+    font-family: 'Indie Flower', cursive;
 }
 
 header > h1{
