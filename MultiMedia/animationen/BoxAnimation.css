@@ -1,0 +1,32 @@
+.wrapper{
+    width: 900px;
+    height: 900px;
+    border: solid 2px black;
+    margin: auto;
+}
+.inline{
+    background-color: green;
+    width: 250px;
+    height: 250px;
+    border: solid 2px black;
+    margin: 5px;
+    position:absolute;
+    display:inline-block;
+    transition: all 0.9s;
+    z-index: 0;
+}
+
+#eins:hover{
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    z-index: 5;
+
+}
+
+#zwei:hover{
+    position: absolute;
+    width: 500px;
+    height: 500px;
+    z-index: 5;
+}
