@@ -1,6 +1,7 @@
 package Gui_2016.GUI_Mädn.model;
 
 import Gui_2016.GUI_Mädn.darstellung.*;
+import Gui_2016.GUI_Mädn.gui.SpielBeginn;
 
 import java.util.*;
 
@@ -82,7 +83,7 @@ public class Spiel {
 		SpielBeginn sb = new SpielBeginn(); 
 		spieler = sb.getStartaufstellung();
 		
-		menue =  new Menue(sb.getScanner());
+		//menue =  new Menue(sb.getScanner());
 		
 		umlauf = new Umlauf(spieler);
 		
