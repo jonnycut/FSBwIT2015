@@ -7,7 +7,7 @@ public class UebungenMain {
 
     public static void main(String[] args) {
 
-        new GuiList();
+        new Taschenrechner();
 
     }
 }
