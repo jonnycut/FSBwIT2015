@@ -53,7 +53,7 @@ public class SpielBeginn extends JDialog {
                 super.mouseReleased(e);
                 DragLable dl = (DragLable) e.getSource();
 
-                for (int i = 0; i<4; i++){
+                for (int i = 0; i<4; i++){                      //wenn "gedragte" figur bereits in einem Feld, dann setze auf NULL
                     if(startAufstellung[i]==zuordnung.get(dl))
                         startAufstellung[i] = null;
                 }
@@ -63,9 +63,9 @@ public class SpielBeginn extends JDialog {
                 if (dl.getX() < -dl.getWidth() / 2 || dl.getY() < -dl.getHeight() / 2 || dl.getX() > groesse - dl.getWidth() / 2 || dl.getY() > groesse - dl.getHeight() / 2) { //figur draussen
                     dl.setLocation(groesse / 2, groesse / 2);
                 } else if (dl.getX() < dl.getWidth() && dl.getY() < dl.getHeight()) { //oben lks
-                    if(startAufstellung[0]==null) {
-                        startAufstellung[0] = zuordnung.get(dl);
-                        dl.setLocation(0, 0);
+                    if(startAufstellung[0]==null) {                 //nur, wenn keine Figur drauf steht
+                        startAufstellung[0] = zuordnung.get(dl);    //figur im Array setzen
+                        dl.setLocation(0, 0);                       //ort des Draglabels festlegen
                     }
                 }else if(dl.getX()>groesse-dl.getWidth()*2 && dl.getY()<dl.getHeight()){ //oben rechts
                     if(startAufstellung[1]==null) {
@@ -73,6 +73,7 @@ public class SpielBeginn extends JDialog {
                         dl.setLocation(groesse - dl.getWidth(), 0);
                     }
                 }else if(dl.getX()>groesse-dl.getWidth()*2 && dl.getY()>groesse-dl.getHeight()*2){ //unten rechts
+
                     if(startAufstellung[2]==null) {
                         startAufstellung[2] = zuordnung.get(dl);
                         dl.setLocation(groesse - dl.getWidth(), groesse - dl.getHeight());
@@ -86,7 +87,7 @@ public class SpielBeginn extends JDialog {
 
 
                 int counter = 0;
-                for(Spieler s: startAufstellung){
+                for(Spieler s: startAufstellung){           //wenn mind. zwei Spieler auf Feldern stehen, WEITER = enabled
                     if (s != null)
                         counter++;
                 }
