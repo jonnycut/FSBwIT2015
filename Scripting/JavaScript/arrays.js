@@ -2,6 +2,8 @@
  * Created by KNapret on 20.01.2016.
  */
 
+"use strict"
+
 var arr = [];
 
 for(var i =0;i<=100;i++){
