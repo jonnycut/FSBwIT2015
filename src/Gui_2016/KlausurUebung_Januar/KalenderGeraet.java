@@ -106,7 +106,7 @@ public class KalenderGeraet {
             cal.set(Calendar.WEEK_OF_YEAR,1);
 
 
-            ersterTag.setText(cal.get(Calendar.MONTH)+"");
+
 
 
 

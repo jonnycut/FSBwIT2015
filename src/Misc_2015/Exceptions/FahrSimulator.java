@@ -1,8 +1,11 @@
+/*
 package Misc_2015.Exceptions;
 
+*/
 /**
  * Created by KNapret on 11.12.2015.
- */
+ *//*
+
 public class FahrSimulator {
 
     public static void main(String[] args) {
@@ -29,3 +32,4 @@ public class FahrSimulator {
 
     }
 }
+*/
