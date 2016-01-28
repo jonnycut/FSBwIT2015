@@ -1,13 +1,12 @@
 package Kalender;
 
-import Gui_2016.KlausurUebung_Januar.MyLabel;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -74,6 +73,18 @@ public class Kalender {
 
             window.remove(inhalt);
 
+            MouseAdapter lableListener = new MouseAdapter() {
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    super.mouseReleased(e);
+
+                    if(e.getSource() instanceof MyLabel){
+                        ((MyLabel) e.getSource()).showAgenda();
+                    }
+                }
+            };
+
+            
 
             inhalt = new JPanel(new GridLayout(5,7));
 
@@ -92,6 +103,7 @@ public class Kalender {
                 temp.setBackground(Color.gray);
                 temp.setOpaque(true);
                 temp.setHorizontalAlignment(SwingConstants.CENTER);
+                temp.addMouseListener(lableListener);
                 this.inhalt.add(temp);
 
                 if(calendar.get(Calendar.DAY_OF_MONTH)!=maxDays)

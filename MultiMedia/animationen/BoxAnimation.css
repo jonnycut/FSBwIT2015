@@ -3,6 +3,7 @@
     height: 900px;
     border: solid 2px black;
     margin: auto;
+    background-color: black;
 }
 .inline{
     background-color: green;
@@ -12,7 +13,7 @@
     margin: 5px;
 
     display:inline-block;
-    transition: all 0.9s;
+    transition: all 1s;
     z-index: 0;
 }
 
@@ -24,6 +25,7 @@
 
 #eins:hover{
     transform: rotate(45deg);
+
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
     z-index: 5;
@@ -35,4 +37,7 @@
     width: 500px;
     height: 500px;
 
+}
+body{
+    background: url("stern.png");
 }
