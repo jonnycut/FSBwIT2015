@@ -7,22 +7,28 @@ import java.util.Date;
 /**
  * Created by KNapret on 28.01.2016.
  */
-public class Termin implements Comparable<Termin> {
+public class Termin {
 
-    private Date startzeit;
-    private Date endzeit;
+//    private Date startzeit;
+//    private Date endzeit;
     private String beschreibung;
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("hh,mm");
 
+    public Termin (String text){
 
-    public Termin (String start, String end, String text){
-        SimpleDateFormat dateFormat = new SimpleDateFormat("hh,mm");
+            this.beschreibung = text;
 
-        try {
-            this.startzeit = dateFormat.parse(start);
-            this.endzeit = dateFormat.parse(end);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            this.startzeit = dateFormat.parse(start);
+//
+//        } catch (ParseException e) {
+//            this.startzeit=null;
+//        }
+//        try {
+//            this.endzeit = dateFormat.parse(end);
+//        } catch (ParseException e){
+//            this.endzeit = null;
+//        }
 
         this.beschreibung = text;
 
@@ -30,23 +36,28 @@ public class Termin implements Comparable<Termin> {
     }
 
 
-    public Date getStartzeit(){
-        return this.startzeit;
+//    public Date getStartzeit(){
+//        return this.startzeit;
+//    }
+//
+//    public Date getEndzeit(){
+//        return this.endzeit;
+//    }
+//
+//    public String getBeschreibung(){
+//        return this.beschreibung;
+//    }
+//
+    public String toString(){
+
+        return beschreibung;
     }
 
-    public Date getEndzeit(){
-        return this.endzeit;
-    }
-
-    public String getBeschreibung(){
-        return this.beschreibung;
-    }
 
 
 
-
-    @Override
-    public int compareTo(Termin o) {
-        return this.startzeit.compareTo(o.getStartzeit());
-    }
+//    @Override
+//    public int compareTo(Termin o) {
+//        return this.startzeit.compareTo(o.getStartzeit());
+//    }
 }
