@@ -79,7 +79,24 @@ public class Kalender {
                     super.mouseReleased(e);
 
                     if(e.getSource() instanceof MyLabel){
-                        ((MyLabel) e.getSource()).showAgenda();
+                        PopUp popUp = new PopUp(((MyLabel) e.getSource()),month.getText(),year.getText());
+
+                    }
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) { //sobald der Mauszeiger das Label erreicht
+                    super.mouseEntered(e);
+                    if(e.getSource() instanceof MyLabel) {
+                        ((MyLabel) e.getSource()).setBackground(Color.lightGray);
+                    }
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) { //sobald der Mauszeiger das Lable verlässt
+                    super.mouseExited(e);
+                    if(e.getSource() instanceof MyLabel) {
+                        ((MyLabel) e.getSource()).setBackground(Color.GRAY);
                     }
                 }
             };
@@ -98,7 +115,7 @@ public class Kalender {
 
             for(int i=0; i< maxDays;i++){
 
-                MyLabel temp = new MyLabel(calendar.get(Calendar.DAY_OF_MONTH) + " " + calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.SHORT,Locale.GERMAN));
+                MyLabel temp = new MyLabel(calendar.getDisplayName(Calendar.DAY_OF_WEEK,Calendar.SHORT,Locale.GERMAN)+" "+calendar.get(Calendar.DAY_OF_MONTH));
                 temp.setBorder(new LineBorder(Color.black));
                 temp.setBackground(Color.gray);
                 temp.setOpaque(true);
@@ -135,6 +152,15 @@ public class Kalender {
 
         calendar.set(Calendar.DAY_OF_MONTH,1);
         calendar.add(Calendar.MONTH, -1);
+    }
+
+    public String getMonat(){
+
+        return this.month.getText();
+    }
+
+    public String getJahr(){
+        return this.year.getText();
     }
 
     }
