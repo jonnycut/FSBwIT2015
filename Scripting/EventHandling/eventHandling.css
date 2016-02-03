@@ -1,0 +1,36 @@
+div{
+    border: solid 1px;
+    width: 500px;
+    height: 500px;
+    position: absolute;
+
+}
+
+#ausgabe{
+    position: relative;
+    height: 20px;
+}
+
+#ansicht1{
+    background-color: aqua;
+    border-radius: 10px;
+
+}
+
+#ansicht2{
+    background-color: red;
+    border-radius: 40px;
+}
+
+#ansicht3{
+    background-color: yellow;
+    border-radius: 70px;
+}
+
+#ansicht4{
+
+    background-color: green;
+    border-radius: 100px;
+
+
+}
