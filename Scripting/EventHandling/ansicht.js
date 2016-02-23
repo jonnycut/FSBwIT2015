@@ -3,12 +3,23 @@
  */
 "use strict"
 
-var divElements = document.querySelectorAll('div');
+var divElements = document.querySelectorAll('.view');
 
-var buttons = document.getElementById('button');
+var buttons = document.querySelectorAll('.viewButton');
+
+for(let i= 0; i<4;i++){
+
+    buttons[i].addEventListener('click',function(){
+
+        hide(divElements);
+
+        divElements[i].style.display = 'block';
+
+    })
 
 
-hide(divElements);
+}
+
 
 
 

@@ -3,6 +3,7 @@ div{
     width: 500px;
     height: 500px;
     position: absolute;
+    display: none;
 
 }
 
@@ -14,6 +15,7 @@ div{
 #ansicht1{
     background-color: aqua;
     border-radius: 10px;
+
 
 }
 
@@ -34,3 +36,4 @@ div{
 
 
 }
+
