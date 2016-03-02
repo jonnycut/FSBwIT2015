@@ -9,46 +9,49 @@ let contaier = document.querySelector('#container');
 
 contaier.addEventListener('mousedown',function(e){
 
-   if(e.target === container) return;
+   if(e.target === contaier) return;
 
     let mX = e.clientX;
     let mY = e.clientY;
-    let eX = e.offsetTop;
-    let eY = e.offsetLeft;
+
+    let eX = e.target.offsetLeft;
+    let eY = e.target.offsetTop;
+
+    let target = e.target;
 
 
-    contaier.addEventListener('mousemove',move);
 
-    function move(e){
 
-        if (e.target === contaier) return;
+    var mousemove = function(e){
+
+
         let difX = e.clientX - mX;
-        let difY = e.clientY -mY;
+        let difY = e.clientY - mY;
 
 
 
-        e.target.style.top = mY-difY +"px";
-        e.target.style.left = mX-difX + "px";
-
-
+        target.style.top = eY+difY +'px';
+        target.style.left = eX+difX + 'px';
 
 
 
 
-        console.log(difX)
 
     };
 
-    contaier.addEventListener('mouseup',up);
 
-    function up(e){
 
-        contaier.removeEventListener('mousemove',move);
-        contaier.removeEventListener('mouseup',up);
+    var mouseup = function(e){
+
+        document.removeEventListener('mousemove',mousemove);
+        document.removeEventListener('mouseup',mouseup);
         console.log("entfernt")
 
 
     }
+
+    document.addEventListener('mousemove',mousemove)
+    document.addEventListener('mouseup', mouseup)
 
 });
 

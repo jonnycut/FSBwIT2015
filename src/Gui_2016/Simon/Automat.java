@@ -47,17 +47,24 @@ public class Automat {
 
                         for(JButton jb : farben){
 
-                            Color c = jb.getBackground();
+                            Icon temp = jb.getIcon();
+                            //Color c = jb.getBackground();
+                            System.out.println(jb.getName());
+
+                            String bild = "src/Gui_2016/Simon/on_"+jb.getName();
+
+                            System.out.println(bild);
+                            jb.setIcon(new ImageIcon(bild));
                             //setze hellere Farbe
-                            jb.setBackground(new Color(c.getRGB()|0x808080));
+                            //jb.setBackground(new Color(c.getRGB()|0x808080));
 
                             try{
                                 Thread.sleep(500);
                             } catch (InterruptedException e1){}
 
 
-
-                            jb.setBackground(c);
+                            jb.setIcon(temp);
+                            //jb.setBackground(c);
 
                             try{
                                 Thread.sleep(1000);
