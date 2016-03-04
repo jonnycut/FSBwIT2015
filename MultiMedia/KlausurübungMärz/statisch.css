@@ -1,0 +1,63 @@
+*{margin: 0; padding: 0;}
+
+#mantel {
+    background-color: aqua;
+    margin: 10px 50px 50px 50px;
+    padding: 10px;
+}
+
+
+
+
+#head{
+    background-color: deepskyblue;
+    margin-bottom: 10px;
+    padding: 1px;
+}
+
+#links{
+    float: left;
+    background-color: dodgerblue;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    width: 630px;
+    padding: 10px;
+
+
+
+}
+
+#rechts{
+    float: left;
+    background-color: dodgerblue;
+    width: 300px;
+    padding: 10px;
+
+
+}
+
+#foot{
+
+
+    clear: both;
+    background-color: deepskyblue;
+    margin-top: 10px;
+    padding: 20px;
+}
+article{
+
+    margin-bottom: 10px;
+}
+
+#rechts>article{
+
+    margin-bottom: 50px;
+}
+
+article>img{
+    float: left;
+    margin-right: 5px;
+    margin-bottom: 5px;
+
+}
+

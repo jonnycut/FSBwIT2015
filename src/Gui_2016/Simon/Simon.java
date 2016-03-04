@@ -56,6 +56,7 @@ public class Simon extends JFrame{
 
             JButton jb = buttons[i]= new JButton(image);
             jb.setName(buttonsStart[i]);
+            jb.setBorder(null);
             jb.setContentAreaFilled(false);
             jb.setBackground(Color.black);
             jb.setOpaque(true);
