@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by IntelliJ IDEA.
  * User: JonnyCut
@@ -16,14 +17,16 @@ if(isset($_GET['name'])){
 
 $info=[
 
-    'Film' => 'Deadpool',
+    'Film' => 'Jochen',
     'FSK' => '18',
     'Länge' => '18 min'
 
 
 ];
 
-echo json_encode($info);
+
+echo json_encode($info,JSON_UNESCAPED_UNICODE);
+//JSON_UNESCAPED_UNICODE --> Behandlung von UTF-8 Problemen
 
 
 

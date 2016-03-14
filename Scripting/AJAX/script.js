@@ -3,22 +3,33 @@
  */
     "use strict"
 // ein XMLHttpRequest Objekt anlegen
-var xmlhttp = new XMLHttpRequest();
+var timer =0;
 
-// Festlegen der Übertragungsmethode, der aufzurufenden Ressource
-// true steht für asynchrone Datenübertragung
-xmlhttp.open('GET', 'server.php?name=max', true);
+setInterval(function(){
 
 
-// registrieren des Listeners, der bei erfolgter Antwort in die Konsole schreibt
-xmlhttp.addEventListener('readystatechange', function() {
+    var xmlhttp = new XMLHttpRequest();
 
-    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
-        console.log(xmlhttp.responseText);
-        document.querySelector('div').innerHTML+=xmlhttp.responseText;
+    // Festlegen der Übertragungsmethode, der aufzurufenden Ressource
+    // true steht für asynchrone Datenübertragung
+    xmlhttp.open('GET', 'server.php?name=max', true);
+
+
+    // registrieren des Listeners, der bei erfolgter Antwort in die Konsole schreibt
+    xmlhttp.addEventListener('readystatechange', function() {
+
+        if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+            console.log(xmlhttp.responseText);
+            document.querySelector('div').innerHTML=xmlhttp.responseText + timer;
+        }
+
+    });
+
+    // AJAX Anfrage absenden
+    xmlhttp.send();
+    timer++;
+
+    if(timer ==60){
+        timer = 0;
     }
-
-});
-
-// AJAX Anfrage absenden
-xmlhttp.send();
+},1000);
