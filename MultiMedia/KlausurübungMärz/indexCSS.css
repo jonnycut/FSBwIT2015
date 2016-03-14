@@ -1,0 +1,41 @@
+*{margin: 0;  padding: 0;}
+
+#mantel{
+    width: 80%;
+    height: 980px;
+    padding: 10px;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: grey;
+
+}
+
+div{
+    margin:1%;
+}
+
+nav{
+
+    width: 10%;
+    height: 97%;
+    background-color: darkgrey;
+    float: left;
+    position: relative;
+    margin-bottom: 10px;
+
+}
+footer{
+    clear: both;
+    position: relative;
+    background-color: lightblue;
+}
+
+article{
+    width: 20%;
+    float: left;
+}
+
+
+
+
