@@ -10,10 +10,21 @@ var username = {
 
 };
 
+var zustand ={
+
+    status: 0
+
+}
+
 //querySelectorAll('NAME / TYP / ID des Elements')[STELLE DES QUEREY ARRAYS].addEventListener('typ, was passiert',function()...
 
 
 function controller_reg(){
+
+    let div = document.querySelector('#registrierung');
+
+    div.classList.add('show');
+
 
     document.querySelectorAll('#registrierung input')[0].addEventListener('input', function(){
 
@@ -27,14 +38,28 @@ function controller_reg(){
     });
 
 
-    document.querySelectorAll('#delete')[0].addEventListener('click', function(){
+    document.querySelectorAll('#submit')[0].addEventListener('click', function(){
+
+        if(username.vorname!= '' && username.nachname != ''){
+
+            div.classList.remove('show');
+            zustand.status = 2;
 
 
-        username.vorname = ''
-        username.nachname = ''
+
+
+        }
 
 
     });
+}
+
+function controller_anwendung(){
+
+    let div = document.querySelector('#anwendung');
+    div.classList.add('show');
+
+
 }
 
 
@@ -51,4 +76,26 @@ Object.observe(username, function(changes){
     });
 });
 
-controller_reg();
+//observer für den Automaten
+
+Object.observe(zustand, function(changes){
+    changes.forEach(function(change){
+        if(change.name === 'status') { //name der Attribute
+
+            switch (change.object.status){
+
+                case 1:
+                    controller_reg();
+                    break;
+
+                case 2:
+                    controller_anwendung();
+                    break;
+            }
+
+        }
+    });
+});
+
+
+zustand.status = 1;

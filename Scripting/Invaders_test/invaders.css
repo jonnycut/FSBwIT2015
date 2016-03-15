@@ -1,0 +1,51 @@
+*{margin: 0; padding: 0}
+
+#wrapper{
+
+    width: 800px;
+    height: 800px;
+    border: 1px solid black;
+    background-color: lightgray;
+    margin: 10px auto auto auto;
+
+
+
+}
+
+#shooter{
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    position: absolute;
+    top: 785px;
+    left: 500px;
+    cursor: pointer;
+    -webkit-user-select: none;
+
+}
+
+#kugel{
+    width: 3px;
+    height: 10px;
+    background-color: black;
+    position: absolute;
+    top: 785px;
+    left: 500px;
+    cursor: pointer;
+    -webkit-user-select: none;
+}
+
+#pause{
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    background-color: black;
+    font-family: monospace;
+    font-size: xx-large;
+    color: red;
+    display: none;
+    top: 200px;
+    left: 400px;
+    text-align: center;
+    padding: auto;
+}
