@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Schulaufgabe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+<table class="ländertabelle">
+    <caption>Länderübersicht</caption>
+    <thead>
+    <tr>
+        <th>Land</th>
+        <th>Hauptstadt</th>
+        <th>Einwohner</th>
+        <th>Fläche</th>
+        <th>Bevölkerungsdichte</th>
+        <th>Amtssprachen</th>
+    </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+</table>
+<input type="radio" name="sort" id="nachName" checked>nach Name
+<input type="radio" name="sort" id="nachDichte">nach Bevölkerungsdichte
+
+
+<hr> <!--Strich...-->
+
+
+
+<input type="text" placeholder="Farbe" id="farbe">
+<input type="button" value="Textfarbe der letzten Spalte ändern" id="changeFarbe">
+
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+.ländertabelle {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.ländertabelle th, .ländertabelle td {
+    width: 100px;
+    padding: 5px;
+}
+
+.ländertabelle th {
+    text-align: left;
+}
+
+tr:nth-child(even){
+
+    background-color: lightgray;
+
+}
