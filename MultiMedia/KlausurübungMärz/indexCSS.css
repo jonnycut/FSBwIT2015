@@ -38,13 +38,16 @@ article:hover{
 img{
 
     position: relative;
+    top: 10px;
+    left: 10px;
+    transition: left 2s, transform 2s;
 
 }
 
 article:hover img{
     left: 500px;
     transform: scale(4);
-    transition:2s;
+
 }
 .bilder{
     width: 90px;

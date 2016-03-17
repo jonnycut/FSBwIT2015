@@ -8,13 +8,35 @@
             border: 1px solid black;
             margin: 50px;
         }
+
+        #pause{
+
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            background-color: black;
+            color: red;
+            display: none;
+        }
+        #lost{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            top: 250px;
+            left: 250px;
+            background-color: black;
+            color: red;
+            font-size: xx-large;
+            display: none;
+        }
     </style>
 </head>
 <body>
 
 
 <canvas id="myCanvas" width="400" height="400"></canvas>
-
+<div id="pause">PAUSE</div>
+<div id="lost">YOU LOST</div>
 
 
 
