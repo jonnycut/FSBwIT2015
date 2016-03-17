@@ -3,7 +3,7 @@
  */
 var canvas = document.getElementById('myCanvas');
 var pauseDiv = document.getElementById('pause')
-var lostDiv = document.getElementById('lost');
+var lostDiv = document.getElementById('gameover');
 var ctx = canvas.getContext('2d'); // 2D-Kontext
 var pause = false;
 var lock = false;
