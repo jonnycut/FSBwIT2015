@@ -21,17 +21,13 @@ class Land {
         this.flaeche = flaeche;
         this.amtssprache = amtssprache;
 
-
     }
-
 
     get bevölkerungsDichte() {
 
         return (this.einwohner / this.flaeche).toFixed(2);
 
     }
-
-
 }
 
 var laender = [
@@ -44,7 +40,6 @@ var laender = [
 
 ];
 
-
 /*---------------------------------------------Tabelle füllen---------------------------------------------------------*/
 
 function tabellenInhalt(laender, html) {
@@ -53,7 +48,9 @@ function tabellenInhalt(laender, html) {
 
     for (let i = 0; i < laender.length; i++) {
 
-        string += '<tr><td>' + laender[i].name + '</td><td>' + laender[i].hstadt + '</td><td>' + laender[i].einwohner + '</td><td>' + laender[i].flaeche + '</td><td>' + laender[i].bevölkerungsDichte + '</td><td class="changeC">' + laender[i].amtssprache.join('<br>') + '</td></tr>';
+        string += '<tr><td>' + laender[i].name + '</td><td>' + laender[i].hstadt + '</td><td>' + laender[i].einwohner +
+            '</td><td>' + laender[i].flaeche + '</td><td>' + laender[i].bevölkerungsDichte + '</td><td class="changeC">'
+            + laender[i].amtssprache.join('<br>') + '</td></tr>';
 
     }
 
@@ -63,9 +60,7 @@ function tabellenInhalt(laender, html) {
 
 tabellenInhalt(laender, html);
 
-/*---------------------------------------------Farbe ändern-----------------------------------------------------------*/
-
-
+/*----------------------Farbe ändern-----------------------------------------------------------*/
 function changeFarbe() {
     let txtField = document.getElementById('farbe');
     let newColor = txtField.value;
@@ -84,25 +79,19 @@ function changeFarbe() {
      for(let i=0;i<trs.length;i++){
      trs[i].lastElementChild.style.color = newColor;
      }*/
-
-
 }
 
 button.addEventListener('click', function (e) {
-
     changeFarbe();
-
 });
 
 
-/*----------------------------------------Sortieren mit Eventlistenern------------------------------------------------*/
-
+/*----------------------------------------Sortieren mit Eventlistenern---------------------------------*/
 nachName.addEventListener('click', function (e) {
 
     laender.sort(function (a, b) {
         return a.name.localeCompare(b.name);
     });
-
 
     tabellenInhalt(laender, html);
 
@@ -124,8 +113,7 @@ nachDichte.addEventListener('click', function (e) {
 
 });
 
-/*------------------------------------------------- BMI Rechner ------------------------------------------------------*/
-
+/*--------------------------------- BMI Rechner ------------------------------------------------------*/
 function bmi() {
 
     let gewicht = document.getElementById('gewicht');
@@ -149,8 +137,6 @@ function bmi() {
         let gewichtV = gewicht.value;
         let bmi = (gewichtV/(groesseV*groesseV)).toFixed(0);
 
-
-
         if(mann.checked){
             if(bmi<20){
                 bmi +="   Sie haben Untergewicht!"
@@ -165,26 +151,18 @@ function bmi() {
 
         ausgabe.innerHTML = "Ihr BMI beträgt:  " + bmi;
 
-
-
-
-
     })
-
 }
 
 bmi();
 
-/*---------------------------------------- Elemente aus Array löschen-------------------------------------------------*/
-
-
+/*---------------------------------------- Elemente aus Array löschen--------------------------------*/
 var nachLand = document.getElementById('nachLand');
 var nachZeile = document.getElementById('nachZeile');
 var btnDelete = document.getElementById('btnDelete');
 var txtDelete = document.getElementById('txtDelete');
 
 function del(){
-
 
     console.log("lösche");
     if(nachLand.checked){
@@ -204,15 +182,35 @@ function del(){
 
         console.log(laender);
         tabellenInhalt(laender,html);
-
-
 }
+
 
 btnDelete.addEventListener('click',del);
 
 
+/*--------------------------Eventlistener auf der Tabelle und Inhalte ins TxtFeld einfügen-------*/
+html.addEventListener('click',function(e){
 
+    var trs = document.querySelectorAll('tr');
+    for(let i=0;i<trs.length;i++){
 
+        if(e.target.isSameNode(trs[i].firstChild)) {
+            if(nachZeile.checked)
+                nachLand.checked = true;
+            txtDelete.value=e.target.textContent;
+        }
+
+    }
+
+    /*Eventlistener nur an der ersten Zelle jeder Spalte registrieren:
+
+    for(let i=0;i<trs.length;i++)
+        trs[i].firstChild.addEventListener('click',function(e){
+        //ANWEISUNGEN
+        nach dem löschen und neu zeichnen der Tabelle, müssen die Listener neu angemeldet werden!
+    })
+    */
+})
 
 
 
