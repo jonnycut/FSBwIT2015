@@ -5,7 +5,6 @@ var canvas = document.getElementById('myCanvas');
 var pauseDiv = document.getElementById('pause')
 var lostDiv = document.getElementById('lost');
 var ctx = canvas.getContext('2d'); // 2D-Kontext
-/*var shooterX =210;*/
 var pause = false;
 var lock = false;
 var shoot;
@@ -76,6 +75,8 @@ class Schuss {
 
 
 }
+
+
 
 class Schiff {
 
@@ -164,6 +165,7 @@ class Alien {
     movedown() {//schiebt das Alien 10px weiter nach unten
 
         this.posY = this.posY + 10;
+        console.log(this.posY)
 
     }
 
@@ -211,6 +213,7 @@ function gameMove() { //sorgt für die Bewegung der Aliens
 
         if(!getInvasion()){
             clearInterval(idMoveDown);
+            start();
         }
 
     }, 1000)
@@ -234,6 +237,11 @@ function getInvasion(){
 
 
 function start() { //Startfunktion, erstellt das Schiff und das AlienArray
+
+    window.addEventListener('keydown', generalListener);
+    window.addEventListener('keydown', pauseListener);
+
+
     shooter = new Schiff(210);
 
     let positionX = 30;
@@ -250,24 +258,25 @@ function start() { //Startfunktion, erstellt das Schiff und das AlienArray
 }
 
 
-window.addEventListener('keydown', function (e) {
+var generalListener = function (e) {
 
-    let key = e.keyCode;
+    let key = e.keyCode; //speichert den KeyCode des Events
+
     window.addEventListener('keydown', pauseListener);
 
 
     if (pause == false) {
 
-        if (key == 39) { //rechts
+        if (key == 39) { // Pfeil-rechts
             shooter.moveRight();
             console.log(shooter.shooterX);
 
-        } else if (key == 37) { //links
+        } else if (key == 37) { //Pfeil-links
 
             shooter.moveLeft()
             console.log(shooter.shooterX);
 
-        } else if (key == 32) { //space
+        } else if (key == 32) { //Space, nur schießen, wenn kein Schuss unterwegs
 
             if (lock == false) {
                 shooter.shoot();
@@ -278,8 +287,8 @@ window.addEventListener('keydown', function (e) {
 
         }
     } else {
-        if (key == 80) { //P
-            console.log("Pause!!")
+        if (key == 80) { //Taste "P"
+            console.log("Pause entfernt")
             pause = false;
             pauseDiv.style.display = 'none';
 
@@ -301,7 +310,7 @@ window.addEventListener('keydown', function (e) {
     }
 
 
-});
+}
 
 
 var pauseListener = function (e) {//bei "P" wird der Schussintevall und AlienIntervall unterbrochen,
@@ -311,7 +320,7 @@ var pauseListener = function (e) {//bei "P" wird der Schussintevall und AlienInt
     if (key == 80) {
         clearInterval(id);
         clearInterval(idMoveDown);
-        console.log("Pause");
+        console.log("Pause gesetzt");
         pause = true;
         //div "pause" anzeigen
         pauseDiv.style.display = 'block';
@@ -337,6 +346,10 @@ function drawCanvas() { //löscht das aktuelle Canvas und zeichnet es neu. Nutzt
 
 start();
 
+
+
+
+/*<--------------------------------------------------- ABLAGE ------------------------------------------------------->*/
 /*function schuss(){
  let y = 375;
  let x = shooterX+10;
