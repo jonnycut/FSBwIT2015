@@ -199,7 +199,8 @@ function gameMove() { //sorgt für die Bewegung der Aliens
             if (alien_formation[i] != null) {
                 alien_formation[i].movedown();
 
-                if (alien_formation[i].posY >= 370) {
+                if (alien_formation[i].posY >= 380) {
+                    console.log("LOST");
                     clearInterval(idMoveDown);
                     lostDiv.style.display = "block";
                 }

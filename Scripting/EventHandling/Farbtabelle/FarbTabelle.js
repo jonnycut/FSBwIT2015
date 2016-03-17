@@ -1,7 +1,3 @@
-/**
- * Created by JonnyCut on 10.02.2016.
- */
-
     "use strict"
 
 var tbody = document.getElementsByTagName('tbody')[0];
@@ -15,19 +11,11 @@ gruen.addEventListener('click',drawTable);
 blau.addEventListener('click',drawTable);
 
 
-
-
-
-
-
-
-
 function drawTable(){
     var content = '';
     var counterR = 0;
     var counterG = 0;
     var counterB = 0;
-
 
     for(let i = 0; i<16;i++){
         content +='<tr>';
@@ -47,13 +35,9 @@ function drawTable(){
 
             };
 
-
-
         }
 
         content+='</tr>'
-
-
 
     }//outerFor
     tbody.innerHTML = content;

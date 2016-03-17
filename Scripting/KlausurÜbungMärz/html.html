@@ -6,7 +6,8 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+ <!---------------------------------------------Tabelle--------------------------------------------------------------->
+<h2>Ländertabelle</h2>
 
 <table class="ländertabelle">
     <caption>Länderübersicht</caption>
@@ -22,16 +23,62 @@
     </thead>
     <tbody id="tbody"></tbody>
 </table>
+ <!---------------------------------------------Sortierung------------------------------------------------------------->
 <input type="radio" name="sort" id="nachName" checked>nach Name
 <input type="radio" name="sort" id="nachDichte">nach Bevölkerungsdichte
+<hr>
+
+ <!---------------------------------------------Löschen---------------------------------------------------------------->
+<input type="radio" name="delete" id="nachLand" checked> Nach Land:
+<input type="radio" name="delete" id="nachZeile"> Nach ZeilenNr.:
+<input type="text" id="txtDelete">
+<input type="button" value="Löschen" id="btnDelete">
+
 
 
 <hr> <!--Strich...-->
 
 
-
+ <!---------------------------------------------Textfarbe-------------------------------------------------------------->
 <input type="text" placeholder="Farbe" id="farbe">
 <input type="button" value="Textfarbe der letzten Spalte ändern" id="changeFarbe">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <!---------------------------------------------BMI Rechner------------------------------------------------------------>
+<hr>
+<h2>BMI Rechner</h2>
+<span>Gewicht:</span>
+<input type="text" placeholder="In Kg" id="gewicht">
+<br><br>
+<span>Größe: </span>
+
+<input type="text" placeholder="In m" id="größe">
+<br>
+<input type="radio" name="geschlecht" id="mann"> Mann
+<input type="radio" name="geschlecht" id="frau"> Frau
+<br>
+<input type="button" value="Berechnen" id="berechnen">
+<input type="button" value="reset" id="reset">
+<br>
+<br>
+<span id="ausgabe"></span>
 
 
 <script src="script.js"></script>
