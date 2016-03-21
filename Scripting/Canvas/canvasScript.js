@@ -8,10 +8,16 @@ var ctx = canvas.getContext('2d'); // 2D-Kontext
 var pause = false;
 var lock = false;
 var shoot;
-var id;
+var alienShot;
+var idShipShot;
+var idAlienShot;
+var idAlienAttack;
+var idShipMoveRight=null;
+var idShipMoveLeft=null;
 var idMoveDown;
 var shooter;
 var alien_formation = [];
+var level = 80;
 
 
 class Schuss {
@@ -20,9 +26,6 @@ class Schuss {
 
         this.posX = posX;
         this.posY = posY;
-        console.log(this.posX);
-        console.log(this.posY);
-
     }
 
     zeichne(race) {
@@ -30,47 +33,67 @@ class Schuss {
         // bzw. weiter unten (je nach Rasse)
         //race: 1 = ship ; 2 = alien
         lock = true;
-        console.log(this.posY);
         ctx.beginPath();
         ctx.rect(this.posX, this.posY, 2, 10);
 
-        this.inTouch();
+        this.inTouch(race);
 
         ctx.fill();
         if (this.posY < 355)
             ctx.clearRect(this.posX, this.posY + 11, 2, 10);
 
         if (race == 1) {
-            this.posY--;
+            this.posY = this.posY-2;
         } else {
-            this.posY++;
+            this.posY = this.posY+1;
         }
 
 
         if (this.posY <= 0 || this.posY >= 380) {
-            clearInterval(id);
-            drawCanvas();
+            if(race==1){
+                clearInterval(idShipShot);
+                idShipShot=null;
+            }else{
+                clearInterval(idAlienShot);
+                idAlienShot = null;
+            }
+
+      
+
+
+
             lock = false;
+            drawCanvas();
         }
+
 
 
     }
 
-    inTouch() { //löscht ein Alien, wenn es getroffen wird.
+    inTouch(race) { //löscht ein Alien, wenn es getroffen wird.
 
         //ToDo: HitBox anpassen!
+        if(race==1){
+            for (let i = 0; i < alien_formation.length; i++) {
 
-        for (let i = 0; i < alien_formation.length; i++) {
-
-            if (alien_formation[i] != null) {
-                if ((this.posX <= alien_formation[i].posX + 9 && this.posX >= alien_formation[i].posX - 5) && (this.posY <= alien_formation[i].posY + 5 && this.posX >= alien_formation[i].posX - 5)) {
-                    alien_formation[i] = null;
-                    this.posY =0;
+                if (alien_formation[i] != null) {
+                    if ((this.posX <= alien_formation[i].posX + 20 && this.posX >= alien_formation[i].posX) && (this.posY <= alien_formation[i].posY +13 && this.posX >= alien_formation[i].posX - 5)) {
+                        alien_formation[i] = null;
+                        this.posY =0;
+                    }
                 }
+
+
+            }
+        } else if (race==2){
+
+            if((this.posX>=shooter.shooterX && this.posX<=shooter.shooterX+20)&&(this.posY>=375)){
+                shooter = null;
+                gameOver();
             }
 
-
         }
+
     }
 
 
@@ -84,22 +107,28 @@ class Schiff {
 
         this.shooterX = posX;
         this.bullet = null;
+        this.img = new Image();
+        this.img.src = "panzer02.png";
+
     }
 
     moveRight() {//setzt die X Position des Schiffes 10px weiter nach rechts
 
-        if (this.shooterX <= 360) {
-            ctx.clearRect(this.shooterX, 375, 20, 20);
 
-            this.shooterX = this.shooterX + 10;
+        if (this.shooterX <= 670) {
 
 
-            ctx.beginPath();
-            ctx.fillStyle = 'black';
-            ctx.rect(this.shooterX, 375, 20, 20);
-            ctx.fill();
+                ctx.clearRect(this.shooterX, 375, 20, 20);
+                this.shooterX = this.shooterX + 5;
+                console.log(this.shooterX);
+                ctx.drawImage(this.img,this.shooterX,375,20,13);
 
 
+
+
+
+        }else{
+            return;
         }
 
 
@@ -107,16 +136,19 @@ class Schiff {
 
     moveLeft() {//setzt die X Position des Schiffes 10px weiter nach links
 
-        if (this.shooterX >= 15) {
-            ctx.clearRect(this.shooterX, 375, 20, 20);
 
-            this.shooterX = this.shooterX - 10;
+        if (this.shooterX >= 10) {
 
 
-            ctx.beginPath();
-            ctx.fillStyle = 'black';
-            ctx.rect(this.shooterX, 375, 20, 20);
-            ctx.fill();
+                ctx.clearRect(this.shooterX,375,20,13);
+
+                this.shooterX = this.shooterX -5;
+                console.log(this.shooterX);
+                ctx.drawImage(this.img,this.shooterX,375,20,13);
+
+
+        }else{
+            return;
         }
 
 
@@ -124,10 +156,7 @@ class Schiff {
 
     draw(X) {//zeichnet das Schiff an Position X (Y Position ist beim Schiff nicht veränderbar)
 
-        ctx.beginPath();
-        ctx.fillStyle = 'black';
-        ctx.rect(X, 375, 20, 20);
-        ctx.fill();
+        ctx.drawImage(this.img,X,375,20,13);
     }
 
     shoot() {//feuert einen Schuss aus aktueller Position +9 (Mitte des Schiffes)
@@ -135,9 +164,10 @@ class Schiff {
         //der Schuss startet immer auf Y=375 (nicht veränderbar)
 
         this.bullet = new Schuss(this.shooterX + 9, 375);
-        id = setInterval(function () {
-            shooter.bullet.zeichne(1);
-        }, 1);
+        idShipShot = setInterval(function () {
+                shooter.bullet.zeichne(1);
+
+        }, 5);
 
     }
 }
@@ -148,12 +178,16 @@ class Alien {
         this.posX = posX;
         this.posY = posY;
         this.bullet = null;
+        this.img = new Image();
+        this.img.src = "alien03.png";
 
     }
 
-    moveRight() {//schiebt das Alien 1px weiter nach rechts
-
-        this.posX++;
+    move(direction) {//schiebt das Alien 1px weiter nach rechts
+        if(direction == "R")
+            this.posX++;
+        else if(direction =="L")
+            this.posX--;
 
     }
 
@@ -171,54 +205,87 @@ class Alien {
 
     shoot() {//feuert einen Schuss vom Alien aus ab (mit hilfe der schuss.shoot())
 
-        this.bullet = new Schuss(this.posX, this.posY);
-        id = setInterval(function () {
-            this.bullet.zeichne(2); //anpassen, von wem der Schuss kommt. Im moment "this = undefined"
-        }, 1);
+        let bullet = this.bullet = new Schuss(this.posX, this.posY);
+
+        idAlienShot = setInterval(function () {
+            bullet.zeichne(2);
+
+        },1);
 
     }
 
-    draw() {//zeichnet das Alien an seiner X und Y Position. 11px breit, 10px hoch, grün.
+    draw() {//zeichnet das Alien an seiner X und Y Position. 20px breit, 13px hoch.
 
-        ctx.beginPath();
-        ctx.fillStyle = 'green';
-        ctx.rect(this.posX, this.posY, 11, 10);
-        ctx.fill();
-
-
+        ctx.drawImage(this.img,this.posX,this.posY,20,13);
     }
 }
 
 function gameMove() { //sorgt für die Bewegung der Aliens
-
+    let direction = "R";
     //ToDo: Bewegung nach rechts und links!
 
     idMoveDown = setInterval(function () { // runter
 
+
+
         for (let i = 0; i < alien_formation.length; i++) {
             if (alien_formation[i] != null) {
-                alien_formation[i].movedown();
+                alien_formation[i].move(direction);
 
-                if (alien_formation[i].posY >= 380) {
-                    console.log("LOST");
-                    clearInterval(idMoveDown);
-                    lostDiv.style.display = "block";
+                if(alien_formation[i].posX >=680){
+                    direction ="L";
+                    for(let a=0;a<alien_formation.length;a++){
+                        if(alien_formation[a] != null)
+                            alien_formation[a].movedown();
+                    }
+
+                }
+                if(alien_formation[i].posX<=0){
+                    direction = "R";
+                    for(let a=0;a<alien_formation.length;a++){
+                        if(alien_formation[a] != null)
+                            alien_formation[a].movedown();
+                    }
                 }
 
-
+                if (alien_formation[i].posY >= 380) {
+                    gameOver();
+                }
             }
         }
 
+
         drawCanvas();
-        console.log("INVASION!")
+        if(shooter.bullet!=null){
+            shooter.bullet.zeichne(1);
+        }
 
         if(!getInvasion()){
             clearInterval(idMoveDown);
+            clearInterval(idAlienAttack);
+            level = level -10;
             start();
         }
 
-    }, 1000)
+    }, level)
 
+
+}
+
+function alien_attack(){
+
+    idAlienAttack = setInterval(function(){
+        let rambo = alien_formation[Math.floor(Math.random()*alien_formation.length)];
+        if(rambo!=null)
+            rambo.shoot();
+    },1000);
+
+}
+
+function gameOver(){
+    console.log("LOST");
+    clearInterval(idMoveDown);
+    lostDiv.style.display = "block";
 
 }
 
@@ -240,22 +307,43 @@ function getInvasion(){
 function start() { //Startfunktion, erstellt das Schiff und das AlienArray
 
     window.addEventListener('keydown', generalListener);
+    window.addEventListener('keyup',keyUpListener);
     window.addEventListener('keydown', pauseListener);
 
 
-    shooter = new Schiff(210);
+    shooter = new Schiff(300);
 
     let positionX = 30;
 
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 12; i++) {
 
         alien_formation[i] = new Alien(positionX + 20, 10);
-        alien_formation[i].draw();
         positionX += 50;
     }
 
-    drawCanvas();
-    gameMove();
+
+
+        drawCanvas();
+        gameMove();
+        alien_attack();
+
+
+
+}
+
+var keyUpListener = function(e){
+    let key = e.keyCode;
+
+    if (key == 39) { // Pfeil-rechts
+        clearInterval(idShipMoveRight);
+        idShipMoveRight=null;
+
+
+    } else if (key == 37) { //Pfeil-links
+        clearInterval(idShipMoveLeft);
+        idShipMoveLeft=null;
+
+    }
 }
 
 
@@ -268,19 +356,29 @@ var generalListener = function (e) {
 
     if (pause == false) {
 
-        if (key == 39) { // Pfeil-rechts
-            shooter.moveRight();
-            console.log(shooter.shooterX);
+        if (key == 39&&idShipMoveRight ==null) { // Pfeil-rechts
 
-        } else if (key == 37) { //Pfeil-links
+            idShipMoveRight = setInterval(function(){
 
-            shooter.moveLeft()
-            console.log(shooter.shooterX);
+                shooter.moveRight();
+                console.log(shooter.shooterX);
+            },16)
+
+
+
+        } else if (key == 37&&idShipMoveLeft==null) { //Pfeil-links
+            idShipMoveLeft = setInterval(function(){
+                shooter.moveLeft()
+                console.log(shooter.shooterX);
+
+            },16)
+
+
 
         } else if (key == 32) { //Space, nur schießen, wenn kein Schuss unterwegs
 
             if (lock == false) {
-                shooter.shoot();
+                shoot=shooter.shoot();
 
 
             }
@@ -334,14 +432,15 @@ var pauseListener = function (e) {//bei "P" wird der Schussintevall und AlienInt
 function drawCanvas() { //löscht das aktuelle Canvas und zeichnet es neu. Nutzt die .draw() Methoden von Alien und Schiff
 
     canvas.width = canvas.width;
-    shooter.draw(shooter.shooterX);
+
 
     for (let i = 0; i < alien_formation.length; i++) {
         if (alien_formation[i] != null)
             alien_formation[i].draw();
+
     }
 
-
+    shooter.draw(shooter.shooterX);
 }
 
 
