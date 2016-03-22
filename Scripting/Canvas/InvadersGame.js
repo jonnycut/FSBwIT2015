@@ -14,8 +14,8 @@ var alienShot;
 var idShipShot;
 var idAlienShot;
 var idAlienAttack;
-var idShipMoveRight=null;
-var idShipMoveLeft=null;
+var idShipMoveRight = null;
+var idShipMoveLeft = null;
 var idMoveDown;
 var shooter;
 var alien_formation = [];
@@ -24,47 +24,46 @@ var level = 10;
 
 class Schuss {
 
-    constructor(posX, posY) {
+    constructor(posX, posY, alien) {
 
         this.posX = posX;
         this.posY = posY;
+        this.alien = alien;
     }
 
-    fly(direction){
+    fly(direction) {
         //Zählt die Y Position des Schusses hoch (bei alienschuss, direction=2) oder runter (ShipShoot, direction = 1)
 
-        if(direction ==1){
-            this.posY = this.posY-4;
-            console.log(this.posY);
+        if (direction == 1) {
+            this.posY = this.posY - 4;
             this.inTouch(direction);
-        }else{
-            this.posY = this.posY+2;
+        } else {
+            this.posY = this.posY + 4;
             this.inTouch(direction);
         }
 
 
-
     }
 
-    draw(){
-        ctx.fillStyle='black';
-        ctx.fillRect(this.posX,this.posY,10,10);
+    draw() {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(this.posX, this.posY, 10, 10);
     }
 
     inTouch(direction) { //löscht ein Alien, wenn es getroffen wird.
 
         //ToDo: HitBox anpassen!
-        if(direction==1){
-            if(this.posY<=0){
-                shooter.bullet=null;
+        if (direction == 1) {
+            if (this.posY <= 0) {
+                shooter.bullet = null;
                 clearInterval(idShipShot);
             }
 
             for (let i = 0; i < alien_formation.length; i++) {
 
                 if (alien_formation[i] != null) {
-                    if ((this.posX <= alien_formation[i].posX + 20 && this.posX >= alien_formation[i].posX) && (this.posY <= alien_formation[i].posY +13 && this.posX >= alien_formation[i].posX - 5)) {
-                        alien_formation[i] = null;
+                    if ((this.posX <= alien_formation[i].posX + 20 && this.posX >= alien_formation[i].posX) && (this.posY <= alien_formation[i].posY + 13 && this.posX >= alien_formation[i].posX - 5)) {
+                        alien_formation.splice(i, 1);
                         shooter.bullet = null;
                         clearInterval(idShipShot);
                     }
@@ -72,11 +71,23 @@ class Schuss {
 
 
             }
-        } else if (direction==2){
+        } else if (direction == 2) {
 
-            if((this.posX>=shooter.shooterX && this.posX<=shooter.shooterX+20)&&(this.posY>=375)){
+            if (this.posY >= 387) {
+                console.log("outOfRange: Y" + this.posY);
+                this.posY = -5;
+                this.posX = -5;
+                this.alien.bullet = null;
+                //Problem: Schuss verschwindet random ca auf Mitte des Canvas....keine Ahnung.
+                //ggf. Intervallfunktion in den Schuss integrieren?!
+                //clearInterval(idAlienShot);
+            }
+
+            if ((this.posX >= shooter.shooterX && this.posX <= shooter.shooterX + 20) && (this.posY >= 370)) {
                 clearInterval(idAlienShot);
-                shooter = null;
+                console.log("Schiff getroffen");
+
+
                 gameOver();
             }
 
@@ -86,7 +97,6 @@ class Schuss {
 
 
 }
-
 
 
 class Schiff {
@@ -106,9 +116,9 @@ class Schiff {
         if (this.shooterX <= 670) {
 
             this.shooterX = this.shooterX + 5;
-            console.log(this.shooterX);
 
-        }else{
+
+        } else {
             return;
         }
 
@@ -120,10 +130,10 @@ class Schiff {
 
         if (this.shooterX >= 10) {
 
-            this.shooterX = this.shooterX -5;
-            console.log(this.shooterX);
+            this.shooterX = this.shooterX - 5;
 
-        }else{
+
+        } else {
             return;
         }
 
@@ -132,13 +142,13 @@ class Schiff {
 
     draw(X) {//zeichnet das Schiff an Position X (Y Position ist beim Schiff nicht veränderbar)
 
-        ctx.drawImage(this.img,X,375,20,13);
+        ctx.drawImage(this.img, X, 375, 20, 13);
     }
 
     shoot() {//feuert einen Schuss aus aktueller Position +9 (Mitte des Schiffes)
         //mit hilfer der schuss.zeichne() Methode ab
         //der Schuss startet immer auf Y=375 (nicht veränderbar)
-        if(this.bullet == null){
+        if (this.bullet == null) {
 
             this.bullet = new Schuss(this.shooterX + 9, 375);
             idShipShot = setInterval(function () {
@@ -163,9 +173,9 @@ class Alien {
     }
 
     move(direction) {//schiebt das Alien 1px weiter nach rechts
-        if(direction == "R")
+        if (direction == "R")
             this.posX++;
-        else if(direction =="L")
+        else if (direction == "L")
             this.posX--;
 
     }
@@ -178,19 +188,20 @@ class Alien {
     movedown() {//schiebt das Alien 10px weiter nach unten
 
         this.posY = this.posY + 10;
-        console.log(this.posY)
+
 
     }
 
     shoot() {//feuert einen Schuss vom Alien aus ab (mit hilfe der schuss.shoot())
+        let alien = this;
 
-        if(this.bullet == null){
+        if (this.bullet == null) {
 
-            this.bullet = new Schuss(this.posX, this.posY);
+            let bullet = this.bullet = new Schuss(this.posX, this.posY, alien);
             idAlienShot = setInterval(function () {
                 bullet.fly(2);
 
-            },5);
+            }, 20);
         }
 
 
@@ -198,7 +209,7 @@ class Alien {
 
     draw() {//zeichnet das Alien an seiner X und Y Position. 20px breit, 13px hoch.
 
-        ctx.drawImage(this.img,this.posX,this.posY,20,13);
+        ctx.drawImage(this.img, this.posX, this.posY, 20, 13);
     }
 }
 
@@ -209,23 +220,22 @@ function gameMove() { //sorgt für die Bewegung der Aliens
     idMoveDown = setInterval(function () { // runter
 
 
-
         for (let i = 0; i < alien_formation.length; i++) {
             if (alien_formation[i] != null) {
                 alien_formation[i].move(direction);
 
-                if(alien_formation[i].posX >=680){
-                    direction ="L";
-                    for(let a=0;a<alien_formation.length;a++){
-                        if(alien_formation[a] != null)
+                if (alien_formation[i].posX >= 680) {
+                    direction = "L";
+                    for (let a = 0; a < alien_formation.length; a++) {
+                        if (alien_formation[a] != null)
                             alien_formation[a].movedown();
                     }
 
                 }
-                if(alien_formation[i].posX<=0){
+                if (alien_formation[i].posX <= 0) {
                     direction = "R";
-                    for(let a=0;a<alien_formation.length;a++){
-                        if(alien_formation[a] != null)
+                    for (let a = 0; a < alien_formation.length; a++) {
+                        if (alien_formation[a] != null)
                             alien_formation[a].movedown();
                     }
                 }
@@ -236,10 +246,11 @@ function gameMove() { //sorgt für die Bewegung der Aliens
             }
         }
 
-        if(!getInvasion()){
+
+        if (!getInvasion()) {
             clearInterval(idMoveDown);
             clearInterval(idAlienAttack);
-            level = level -10;
+            level = level - 10;
             start();
         }
 
@@ -248,29 +259,33 @@ function gameMove() { //sorgt für die Bewegung der Aliens
 
 }
 
-function alien_attack(){
+function alien_attack() {
 
-    idAlienAttack = setInterval(function(){
-        let rambo = alien_formation[Math.floor(Math.random()*alien_formation.length)];
-        if(rambo!=null)
+    idAlienAttack = setInterval(function () {
+        let rambo = alien_formation[Math.floor(Math.random() * alien_formation.length)];
+        if (rambo != null)
             rambo.shoot();
-    },1500);
+    }, 1500);
 
 }
 
-function gameOver(){
+function gameOver() {
     console.log("LOST");
     clearInterval(idMoveDown);
+    clearInterval(idGame);
+    clearInterval(idAlienAttack)
+    clearInterval(idAlienShot);
+    clearInterval(idShipShot);
     lostDiv.style.display = "block";
 
 }
 
-function getInvasion(){
+function getInvasion() {
 
     let invasion = false;
 
-    for(let i=0;i<alien_formation.length;i++){
-        if(alien_formation[i]!=null){
+    for (let i = 0; i < alien_formation.length; i++) {
+        if (alien_formation[i] != null) {
             invasion = true;
         }
     }
@@ -283,7 +298,7 @@ function getInvasion(){
 function start() { //Startfunktion, erstellt das Schiff und das AlienArray
 
     window.addEventListener('keydown', generalListener);
-    window.addEventListener('keyup',keyUpListener);
+    window.addEventListener('keyup', keyUpListener);
     window.addEventListener('keydown', pauseListener);
 
 
@@ -298,28 +313,26 @@ function start() { //Startfunktion, erstellt das Schiff und das AlienArray
     }
 
 
-
     drawCanvas();
     gameMove();
-    //alien_attack();
-
+    alien_attack();
 
 
 }
 
-var keyUpListener = function(e){
+var keyUpListener = function (e) {
 
     //nötig für eine weiche Bewegung des Schiffes!
     let key = e.keyCode;
 
     if (key == 39) { // Pfeil-rechts
         clearInterval(idShipMoveRight);
-        idShipMoveRight=null;
+        idShipMoveRight = null;
 
 
     } else if (key == 37) { //Pfeil-links
         clearInterval(idShipMoveLeft);
-        idShipMoveLeft=null;
+        idShipMoveLeft = null;
 
     }
 }
@@ -334,31 +347,28 @@ var generalListener = function (e) {
 
     if (pause == false) {
 
-        if (key == 39&&idShipMoveRight ==null) { // Pfeil-rechts
+        if (key == 39 && idShipMoveRight == null) { // Pfeil-rechts
 
-            idShipMoveRight = setInterval(function(){
+            idShipMoveRight = setInterval(function () {
 
                 shooter.moveRight();
-                console.log(shooter.shooterX);
-            },16)
+
+            }, 16)
 
 
-
-        } else if (key == 37&&idShipMoveLeft==null) { //Pfeil-links
-            idShipMoveLeft = setInterval(function(){
+        } else if (key == 37 && idShipMoveLeft == null) { //Pfeil-links
+            idShipMoveLeft = setInterval(function () {
                 shooter.moveLeft()
-                console.log(shooter.shooterX);
 
-            },16)
 
+            }, 16)
 
 
         } else if (key == 32) { //Space, nur schießen, wenn kein Schuss unterwegs
 
 
-                if(shooter.bullet==null)
-                    shooter.shoot();
-
+            if (shooter.bullet == null)
+                shooter.shoot();
 
 
         }
@@ -389,7 +399,8 @@ var generalListener = function (e) {
 }
 
 
-var pauseListener = function (e) {//bei "P" wird der Schussintevall und AlienIntervall unterbrochen,
+var pauseListener = function (e) {
+     //bei "P" wird der Schussintevall und AlienIntervall unterbrochen,
     // Pause angezeigt und der Eventlistener wieder entfernt
 
     let key = e.keyCode;
@@ -407,34 +418,31 @@ var pauseListener = function (e) {//bei "P" wird der Schussintevall und AlienInt
 }
 
 function drawCanvas() {
- //löscht das aktuelle Canvas und zeichnet es neu. Nutzt die .draw() Methoden von Alien und Schiff
+    //löscht das aktuelle Canvas und zeichnet es neu. Nutzt die .draw() Methoden von Alien und Schiff
 
-   idGame = setInterval(function(){
-       canvas.width = canvas.width;
-
-
-       for (let i = 0; i < alien_formation.length; i++) {
-           if (alien_formation[i] != null){
-               alien_formation[i].draw();
-               if(alien_formation[i].bullet != null){
-                   alien_formation[i].bullet.draw();
-               }
-           }
+    idGame = setInterval(function () {
+        canvas.width = canvas.width;
 
 
-       }
+        for (let i = 0; i < alien_formation.length; i++) {
+            if (alien_formation[i] != null) {
+                alien_formation[i].draw();
+                if (alien_formation[i].bullet != null) {
+                    alien_formation[i].bullet.draw();
+                }
+            }
 
-       shooter.draw(shooter.shooterX);
-       if(shooter.bullet!=null)
+
+        }
+
+        shooter.draw(shooter.shooterX);
+        if (shooter.bullet != null)
             shooter.bullet.draw();
-   })
+    },10)
 }
 
 
-
 start();
-
-
 
 
 /*<--------------------------------------------------- ABLAGE ------------------------------------------------------->*/
