@@ -5,21 +5,21 @@
  * Created by KNapret on 15.03.2016.
  */
 var canvas = document.getElementById('myCanvas');
-var pauseDiv = document.getElementById('pause')
-var lostDiv = document.getElementById('gameover');
 var ctx = canvas.getContext('2d'); // 2D-Kontext
 var pause = false;
+var test;
 var idGame;
 var alienShot;
-var idShipShot;
+
 var idAlienShot;
 var idAlienAttack;
 var idShipMoveRight = null;
 var idShipMoveLeft = null;
 var idMoveDown;
+
 var shooter;
 var alien_formation = [];
-var level = 10;
+
 
 
 class Schuss {
@@ -35,7 +35,7 @@ class Schuss {
         //Zählt die Y Position des Schusses hoch (bei alienschuss, direction=2) oder runter (ShipShoot, direction = 1)
 
         if (direction == 1) {
-            this.posY = this.posY - 4;
+            this.posY = this.posY - 8;
             this.inTouch(direction);
         } else {
             this.posY = this.posY + 4;
@@ -56,7 +56,7 @@ class Schuss {
         if (direction == 1) {
             if (this.posY <= 0) {
                 shooter.bullet = null;
-                clearInterval(idShipShot);
+
             }
 
             for (let i = 0; i < alien_formation.length; i++) {
@@ -65,7 +65,7 @@ class Schuss {
                     if ((this.posX <= alien_formation[i].posX + 20 && this.posX >= alien_formation[i].posX) && (this.posY <= alien_formation[i].posY + 13 && this.posX >= alien_formation[i].posX - 5)) {
                         alien_formation.splice(i, 1);
                         shooter.bullet = null;
-                        clearInterval(idShipShot);
+
                     }
                 }
 
@@ -73,21 +73,18 @@ class Schuss {
             }
         } else if (direction == 2) {
 
-            if (this.posY >= 387) {
-                console.log("outOfRange: Y" + this.posY);
-                this.posY = -5;
-                this.posX = -5;
+            if (this.posY > 380) {
                 this.alien.bullet = null;
                 //Problem: Schuss verschwindet random ca auf Mitte des Canvas....keine Ahnung.
                 //ggf. Intervallfunktion in den Schuss integrieren?!
                 //clearInterval(idAlienShot);
             }
 
-            if ((this.posX >= shooter.shooterX && this.posX <= shooter.shooterX + 20) && (this.posY >= 370)) {
+            if ((this.posX >= shooter.shooterX && this.posX <= shooter.shooterX + 20) && (this.posY >= 370&& this.posY <380)) {
                 clearInterval(idAlienShot);
-                console.log("Schiff getroffen");
-
-
+                this.alien.bullet = null;
+                console.log(this);
+                console.log(shooter)
                 gameOver();
             }
 
@@ -151,10 +148,15 @@ class Schiff {
         if (this.bullet == null) {
 
             this.bullet = new Schuss(this.shooterX + 9, 375);
-            idShipShot = setInterval(function () {
-                shooter.bullet.fly(1);
+            let fire= function () {
+                if(shooter.bullet!= null){
+                    shooter.bullet.fly(1);
+                    requestAnimationFrame(fire);
+                }
 
-            }, 1);
+            }
+            requestAnimationFrame(fire)
+
         }
 
 
@@ -167,16 +169,30 @@ class Alien {
         this.posX = posX;
         this.posY = posY;
         this.bullet = null;
+        this.images=["alien03.png","alien03_R.png",null,null,null,null];
         this.img = new Image();
-        this.img.src = "alien03.png";
+        this.img.src = this.images[0];
 
     }
 
     move(direction) {//schiebt das Alien 1px weiter nach rechts
-        if (direction == "R")
+        if (direction == "R"){
             this.posX++;
-        else if (direction == "L")
+            let newBild = this.images[Math.floor(Math.random()*this.images.length)];
+            if(newBild!=null)
+                this.img.src= newBild;
+
+        }
+
+
+        else if (direction == "L"){
             this.posX--;
+            let newBild = this.images[Math.floor(Math.random()*this.images.length)];
+            if(newBild!=null)
+                this.img.src= newBild;
+
+        }
+
 
     }
 
@@ -198,10 +214,14 @@ class Alien {
         if (this.bullet == null) {
 
             let bullet = this.bullet = new Schuss(this.posX, this.posY, alien);
-            idAlienShot = setInterval(function () {
-                bullet.fly(2);
+            let fire = function(){
+                if(alien.bullet !=null){
+                    alien.bullet.fly(2);
+                    requestAnimationFrame(fire);
+                }
 
-            }, 20);
+            }
+            requestAnimationFrame(fire);
         }
 
 
@@ -213,31 +233,46 @@ class Alien {
     }
 }
 
-function gameMove() { //sorgt für die Bewegung der Aliens
+function gameMove(level) { //sorgt für die Bewegung der Aliens
     let direction = "R";
+
     //ToDo: Bewegung nach rechts und links!
 
-    idMoveDown = setInterval(function () { // runter
+    idMoveDown = setInterval(function () {
+    // runter
 
 
         for (let i = 0; i < alien_formation.length; i++) {
             if (alien_formation[i] != null) {
+
                 alien_formation[i].move(direction);
 
                 if (alien_formation[i].posX >= 680) {
-                    direction = "L";
+                    alien_formation[i].posX--;
                     for (let a = 0; a < alien_formation.length; a++) {
-                        if (alien_formation[a] != null)
                             alien_formation[a].movedown();
-                    }
+                        if(a>i&&direction=="R"){
+                            alien_formation[a].move(direction);
+                            console.log("Schiebe " + direction)
+                        }
 
-                }
-                if (alien_formation[i].posX <= 0) {
-                    direction = "R";
-                    for (let a = 0; a < alien_formation.length; a++) {
-                        if (alien_formation[a] != null)
-                            alien_formation[a].movedown();
                     }
+                    direction = "L";
+                }
+
+
+
+                if (alien_formation[i].posX <= 0) {
+                    alien_formation[i].posX++;
+                    for (let a = 0; a < alien_formation.length; a++) {
+                            alien_formation[a].movedown();
+                        if(a>i&&direction=="L"){
+                            alien_formation[a].move(direction);
+                            console.log("schiebe "+direction)
+                        }
+
+                    }
+                    direction = "R";
                 }
 
                 if (alien_formation[i].posY >= 380) {
@@ -250,8 +285,13 @@ function gameMove() { //sorgt für die Bewegung der Aliens
         if (!getInvasion()) {
             clearInterval(idMoveDown);
             clearInterval(idAlienAttack);
+
+
             level = level - 10;
-            start();
+            if(level <10)
+                level = 10;
+            console.log("Level UP!  "+level);
+            start(level);
         }
 
     }, level)
@@ -270,12 +310,11 @@ function alien_attack() {
 }
 
 function gameOver() {
+    let lostDiv = document.getElementById('gameover');
     console.log("LOST");
     clearInterval(idMoveDown);
     clearInterval(idGame);
     clearInterval(idAlienAttack)
-    clearInterval(idAlienShot);
-    clearInterval(idShipShot);
     lostDiv.style.display = "block";
 
 }
@@ -295,27 +334,36 @@ function getInvasion() {
 }
 
 
-function start() { //Startfunktion, erstellt das Schiff und das AlienArray
+function start(level) { //Startfunktion, erstellt das Schiff und das AlienArray
 
     window.addEventListener('keydown', generalListener);
     window.addEventListener('keyup', keyUpListener);
     window.addEventListener('keydown', pauseListener);
 
 
+
     shooter = new Schiff(300);
 
     let positionX = 30;
+    let positionY = 10;
 
-    for (let i = 0; i < 12; i++) {
+    for (let i = 1; i <= 48; i++) {
 
-        alien_formation[i] = new Alien(positionX + 20, 10);
+        alien_formation[i-1] = new Alien(positionX + 20, positionY);
         positionX += 50;
+
+        if(i%12==0){
+            positionY +=30;
+            positionX = 30;
+        }
+
+
     }
 
 
     drawCanvas();
-    gameMove();
-    alien_attack();
+    gameMove(level);
+    //alien_attack();
 
 
 }
@@ -327,6 +375,7 @@ var keyUpListener = function (e) {
 
     if (key == 39) { // Pfeil-rechts
         clearInterval(idShipMoveRight);
+
         idShipMoveRight = null;
 
 
@@ -340,6 +389,7 @@ var keyUpListener = function (e) {
 
 var generalListener = function (e) {
 
+    let pauseDiv = document.getElementById('pause')
     let key = e.keyCode; //speichert den KeyCode des Events
 
     window.addEventListener('keydown', pauseListener);
@@ -350,9 +400,7 @@ var generalListener = function (e) {
         if (key == 39 && idShipMoveRight == null) { // Pfeil-rechts
 
             idShipMoveRight = setInterval(function () {
-
                 shooter.moveRight();
-
             }, 16)
 
 
@@ -402,7 +450,7 @@ var generalListener = function (e) {
 var pauseListener = function (e) {
      //bei "P" wird der Schussintevall und AlienIntervall unterbrochen,
     // Pause angezeigt und der Eventlistener wieder entfernt
-
+    let pauseDiv = document.getElementById('pause')
     let key = e.keyCode;
     if (key == 80) {
         clearInterval(id);
@@ -420,29 +468,34 @@ var pauseListener = function (e) {
 function drawCanvas() {
     //löscht das aktuelle Canvas und zeichnet es neu. Nutzt die .draw() Methoden von Alien und Schiff
 
-    idGame = setInterval(function () {
+    //idGame = setInterval(function () {
+
+    var game = function (){
+
         canvas.width = canvas.width;
 
-
         for (let i = 0; i < alien_formation.length; i++) {
-            if (alien_formation[i] != null) {
-                alien_formation[i].draw();
-                if (alien_formation[i].bullet != null) {
-                    alien_formation[i].bullet.draw();
-                }
-            }
 
+            alien_formation[i].draw();
+            if (alien_formation[i].bullet != null) {
+                alien_formation[i].bullet.draw();
+            }
 
         }
 
         shooter.draw(shooter.shooterX);
         if (shooter.bullet != null)
             shooter.bullet.draw();
-    },10)
+
+        requestAnimationFrame(game)
+    }
+    requestAnimationFrame(game);
+
+    //},16) //1 Bild pro mS, entspricht 62,5 FPS
 }
 
 
-start();
+start(10);
 
 
 /*<--------------------------------------------------- ABLAGE ------------------------------------------------------->*/
