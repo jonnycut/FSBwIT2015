@@ -9,6 +9,7 @@ var ctx = canvas.getContext('2d'); // 2D-Kontext
 var pause = false;
 var idGame;
 var alienShot;
+var gLevel;
 
 var idAlienShot;
 var idAlienAttack;
@@ -51,10 +52,10 @@ class Schuss {
 
 
 
-        if (direction == 1) {
+        if (direction == 1 && pause==false) {
             this.posY = this.posY - 8;
             this.inTouch(direction);
-        } else {
+        } else if(direction ==2 && pause==false) {
             this.posY = this.posY + 4;
             this.inTouch(direction);
         }
@@ -162,7 +163,7 @@ class Schiff {
          * Sperrt den Spieler im Canvas ein (bei x>=670px)
          */
 
-        if (this.shooterX <= 670) {
+        if (this.shooterX <= 670 && pause==false) {
             this.shooterX = this.shooterX + 5;
 
 
@@ -179,7 +180,7 @@ class Schiff {
          * Sperrt den Spieler im Canvas ein (bei x>=0px)
          */
 
-        if (this.shooterX >= 10) {
+        if (this.shooterX >= 10 && pause==false) {
 
             this.shooterX = this.shooterX - 5;
 
@@ -196,6 +197,7 @@ class Schiff {
          * Kann Flurry aber schöner!!
          * @type {Schiff}
          */
+
         var ship = this;
 
         var exp= function(){
@@ -207,12 +209,13 @@ class Schiff {
                 ship.posY-=8;
 
 
-            if(ship.height<60)
+            if(ship.height<60 && pause==false)
                 requestAnimationFrame(exp);
 
 
         }
-        requestAnimationFrame(exp);
+        if(pause ==false)
+            requestAnimationFrame(exp);
     }
 
     draw(X) {
@@ -229,7 +232,7 @@ class Schiff {
          * der Schuss startet immer auf Y=375 (nicht veränderbar)
          */
 
-        if (this.bullet == null) {
+        if (this.bullet == null && pause==false) {
             this.soundShoot.play();
             this.bullet = new Schuss(this.shooterX + 9, 375);
             let fire= function () {
@@ -351,7 +354,7 @@ class Alien {
             alien.posX -=4;
             alien.posY-=4;
 
-            if(alien.height<60)
+            if(alien.height<60 && pause==false)
                 requestAnimationFrame(exp);
             if(alien.height>=60){
                 console.log(index);
@@ -360,7 +363,8 @@ class Alien {
             }
 
         }
-        requestAnimationFrame(exp);
+        if(pause == false)
+            requestAnimationFrame(exp);
 
 
     }
@@ -374,7 +378,7 @@ class Alien {
 
         let alien = this;
 
-        if (this.bullet == null) {
+        if (this.bullet == null && pause==false) {
 
             let bullet = this.bullet = new Schuss(this.posX, this.posY, alien);
             let fire = function(){
@@ -465,10 +469,13 @@ function gameMove(level) {
             if(level <10)
                 level = 10;
             console.log("Level UP!  "+level);
-            start(level);
+            baueAlienFormation()
+            gameMove(level);
         }
 
     }, level)
+
+    alien_attack();
 
 
 }
@@ -483,9 +490,12 @@ function alien_attack() {
      */
 
     idAlienAttack = setInterval(function () {
-        let rambo = alien_formation[Math.floor(Math.random() * alien_formation.length)];
-        if (rambo != null)
-            rambo.shoot();
+        if(pause==false){
+            let rambo = alien_formation[Math.floor(Math.random() * alien_formation.length)];
+            if (rambo != null)
+                rambo.shoot();
+        }
+
     }, 1500);
 
 }
@@ -524,25 +534,7 @@ function getInvasion() {
 
 }
 
-
-function start(level) {
-    /**
-     * Startfunktion, erstellt das Schiff und das AlienArray
-     * Schreibt die Leben in das "lives-Div"
-     * Startet drawCanvas(), gameMove und alienAttack
-     * @param level (int) Schwierigkeitsgrad, BewegungsIntervall der Aliens (kleiner = schneller)
-     */
-
-    window.addEventListener('keydown', generalListener);
-    window.addEventListener('keyup', keyUpListener);
-    window.addEventListener('keydown', pauseListener);
-
-
-
-
-    shooter = new Schiff(300);
-
-    document.getElementById('lives').innerHTML = shooter.lives;
+function baueAlienFormation(){
 
     let positionX = 30;
     let positionY = 10;
@@ -561,11 +553,36 @@ function start(level) {
 
 
     }
+}
 
 
+function start(level) {
+    /**
+     * Startfunktion, erstellt das Schiff
+     * Schreibt die Leben in das "lives-Div"
+     * Startet drawCanvas(), gameMove und alienAttack
+     * @param level (int) Schwierigkeitsgrad, BewegungsIntervall der Aliens (kleiner = schneller)
+     */
+
+    window.addEventListener('keydown', generalListener);
+    window.addEventListener('keyup', keyUpListener);
+    window.addEventListener('keydown', pauseListener);
+
+
+
+
+    shooter = new Schiff(300);
+
+    document.getElementById('lives').innerHTML = shooter.lives;
+
+
+
+   baueAlienFormation();
+
+    gLevel = level;
     drawCanvas();
     gameMove(level);
-    alien_attack();
+
 
 
 }
@@ -587,6 +604,7 @@ var keyUpListener = function (e) {
 
     } else if (key == 37) { //Pfeil-links
         clearInterval(idShipMoveLeft);
+        clearInterval(idAlienAttack);
         idShipMoveLeft = null;
 
     }
@@ -639,19 +657,16 @@ var generalListener = function (e) {
             console.log("Pause entfernt")
             pause = false;
             pauseDiv.style.display = 'none';
+            clearInterval(idAlienAttack);
+            //explodierendes Alien kicken um Standbild zu vermeiden
 
-            if (shooter.bullet != null) {
-
-                if (shooter.bullet.posY != 375) {
-                    id = setInterval(function () {
-                        shooter.bullet.zeichne(1);
-                    }, 1);
-
-
+            for(let i=0;i<alien_formation.length;i++){
+                if(alien_formation[i].isExploding){
+                    alien_formation.splice(i,1);
                 }
             }
 
-            gameMove();
+            gameMove(gLevel);
 
 
         }
@@ -671,7 +686,7 @@ var pauseListener = function (e) {
     let pauseDiv = document.getElementById('pause')
     let key = e.keyCode;
     if (key == 80) {
-        clearInterval(id);
+
         clearInterval(idMoveDown);
         console.log("Pause gesetzt");
         pause = true;
