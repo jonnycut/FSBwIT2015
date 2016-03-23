@@ -27,6 +27,13 @@ var images4 =["alien05.png","alien05b.png",null,null,null,null];
 
 
 class Schuss {
+    /**
+     *
+     * @param posX (int) - X Position des Schusses
+     * @param posY (int) - Y Position des Schusses
+     * @param alien(Alien) optional - bei Alienschuss, muss der Schuss wissen, zu welchem
+     * Alien er gehört, damit die Bullet des Aliens wieder genullt werden kann
+     */
 
     constructor(posX, posY, alien) {
 
@@ -37,7 +44,12 @@ class Schuss {
     }
 
     fly(direction) {
-        //Zählt die Y Position des Schusses hoch (bei alienschuss, direction=2) oder runter (ShipShoot, direction = 1)
+        /**
+         * Zählt die Y Position des Schusses hoch (direction=2) oder runter (direction = 1)
+         * @param direction (int) alienschuss =2, ShipShoot=1
+         */
+
+
 
         if (direction == 1) {
             this.posY = this.posY - 8;
@@ -51,11 +63,22 @@ class Schuss {
     }
 
     draw() {
+        /**Zeichnet das Alien auf das SpielCanvas
+         * @type {string}
+         */
+
         ctx.fillStyle = 'black';
         ctx.fillRect(this.posX, this.posY, 5, 10);
     }
 
-    inTouch(direction) { //löscht ein Alien, wenn es getroffen wird.
+    inTouch(direction) {
+        /**
+         * Prüft, ob ein Schuss ein Alien oder das Schiff trifft.
+         * Hier wird die Hitbox festgelegt.
+         * Setzt auch "Bullet" des Schiffes auf NULL, wenn er außerhalb des Canvas ist
+         * oder ein Alien getroffen hat.
+         * @param direction (int) 1 = Schiffschuss, 2 = Alienschuss
+         */
 
         //ToDo: HitBox anpassen!
         if (direction == 1) {
@@ -81,13 +104,11 @@ class Schuss {
 
             }
         } else if (direction == 2) {
+            //Prüfung bei Alienschuss
 
             if (this.posY > 380) {
                 this.isAlive=false;
                 this.alien.bullet = null;
-                //Problem: Schuss verschwindet random ca auf Mitte des Canvas....keine Ahnung.
-                //ggf. Intervallfunktion in den Schuss integrieren?!
-                //clearInterval(idAlienShot);
             }
 
             if (this.isAlive&&(this.posX >= shooter.shooterX && this.posX <= shooter.shooterX + 22) && (this.posY >= 370&& this.posY <380)) {
@@ -115,6 +136,11 @@ class Schuss {
 
 
 class Schiff {
+    /** Basisklasse Schiff
+     * Y Position ist fest auf 375
+     * width (20px) und height (20px) sind fest, da nur für Explosion gebraucht
+     * @param posX X-Position des Schiffes
+     */
 
     constructor(posX) {
 
@@ -130,8 +156,11 @@ class Schiff {
 
     }
 
-    moveRight() {//setzt die X Position des Schiffes 10px weiter nach rechts
-
+    moveRight() {
+        /**
+         * setzt die X Position des Schiffes 5px weiter nach rechts
+         * Sperrt den Spieler im Canvas ein (bei x>=670px)
+         */
 
         if (this.shooterX <= 670) {
             this.shooterX = this.shooterX + 5;
@@ -145,7 +174,10 @@ class Schiff {
     }
 
     moveLeft() {//setzt die X Position des Schiffes 10px weiter nach links
-
+        /**
+         * setzt die X Position des Schiffes -5px weiter nach Links
+         * Sperrt den Spieler im Canvas ein (bei x>=0px)
+         */
 
         if (this.shooterX >= 10) {
 
@@ -159,6 +191,11 @@ class Schiff {
 
     }
     explode(){
+        /**
+         * Animiert die Explosion des Schiffes
+         * Kann Flurry aber schöner!!
+         * @type {Schiff}
+         */
         var ship = this;
 
         var exp= function(){
@@ -178,14 +215,20 @@ class Schiff {
         requestAnimationFrame(exp);
     }
 
-    draw(X) {//zeichnet das Schiff an Position X (Y Position ist beim Schiff nicht veränderbar)
+    draw(X) {
+        /**
+         * Zeichnet das Schiff an Position X (Y Position ist beim Schiff nicht veränderbar)
+         */
 
         ctx.drawImage(this.img, X, this.posY, this.width,this.height);
     }
 
-    shoot() {//feuert einen Schuss aus aktueller Position +9 (Mitte des Schiffes)
-        //mit hilfer der schuss.zeichne() Methode ab
-        //der Schuss startet immer auf Y=375 (nicht veränderbar)
+    shoot() {
+        /**feuert einen Schuss aus aktueller Position +9 (Mitte des Schiffes)
+         * mit Hilfe der schuss.fly(direction) Methode ab.
+         * der Schuss startet immer auf Y=375 (nicht veränderbar)
+         */
+
         if (this.bullet == null) {
             this.soundShoot.play();
             this.bullet = new Schuss(this.shooterX + 9, 375);
@@ -205,6 +248,12 @@ class Schiff {
 }
 
 class Alien {
+    /**Basisklasse der Aliens
+     *
+     * @param posX (int) X-Position des Aliens
+     * @param posY (int) Y Position des Aliens
+     * @param art (int, 1-4) benötigt zu Bilderauswahl
+     */
 
 
     constructor(posX, posY,art) {
@@ -238,7 +287,13 @@ class Alien {
 
     }
 
-    move(direction) {//schiebt das Alien 1px weiter nach rechts
+    move(direction) {
+        /**
+         * schiebt das Alien 1px weiter nach rechts
+         * und wechselt das Bild random (Animation)
+         *
+         * @param direction (String, "L|R")
+         */
         if (direction == "R"&&! this.isExploding){
 
             this.posX++;
@@ -260,18 +315,29 @@ class Alien {
 
     }
 
-    moveLeft() {//schiebt das Alien 1px weiter nach links
-
+    /*moveLeft() {//schiebt das Alien 1px weiter nach links
+        //wird eigentlich nicht mehr benötigt
         this.posX--;
-    }
+    }*/
 
-    movedown() {//schiebt das Alien 10px weiter nach unten
+    movedown() {
+        /**
+         * Schiebt das Alien 10px weiter nach unten
+         */
 
         this.posY = this.posY + 10;
 
 
     }
     explode(index){
+        /**
+         * Animiert die Explosion für ein Alien
+         * Kann Flurry wahrscheinlich auch schöner.
+         *
+         *
+         * @type {Alien}
+         * @param index (int) - Löscht Alien aus alien_formation[index]
+         */
         var alien = this;
         this.isExploding = true;
 
@@ -300,7 +366,12 @@ class Alien {
     }
 
 
-    shoot() {//feuert einen Schuss vom Alien aus ab (mit hilfe der schuss.shoot())
+    shoot() {
+        /**
+         * Feuert einen Schuss mit Hilfer der Schuss.fly() methode.
+         * @type {Alien}
+         */
+
         let alien = this;
 
         if (this.bullet == null) {
@@ -319,16 +390,27 @@ class Alien {
 
     }
 
-    draw() {//zeichnet das Alien an seiner X und Y Position. 20px breit, 13px hoch.
+    draw() {
+        /**
+         * Zeichnet das Alien an seiner X und Y Position. 20px breit, 13px hoch.
+         */
 
         ctx.drawImage(this.img, this.posX, this.posY, this.with, this.height);
     }
 }
 
-function gameMove(level) { //sorgt für die Bewegung der Aliens
+function gameMove(level) {
+    /**
+     * Sorgt für die Bewegung der Aliens.
+     * Nach rechts bis Canvasrand, 10px runter,
+     * Nach links bis Canvasrand and again.
+     *
+     * Wenn getInvasion = flase -> Level-Up
+     * @type {string}
+     */
     let direction = "R";
 
-    //ToDo: Bewegung nach rechts und links!
+
 
     idMoveDown = setInterval(function () {
     // runter
@@ -393,6 +475,13 @@ function gameMove(level) { //sorgt für die Bewegung der Aliens
 
 function alien_attack() {
 
+    /**
+     * Sucht random ein Alien aus alien_formation aus
+     * und lässt es schießen.
+     * Intervall: alle 1500ms
+     * @type {number}
+     */
+
     idAlienAttack = setInterval(function () {
         let rambo = alien_formation[Math.floor(Math.random() * alien_formation.length)];
         if (rambo != null)
@@ -402,6 +491,11 @@ function alien_attack() {
 }
 
 function gameOver() {
+    /**
+     * Cleart alle Intervalle und zeigt "Lost-Div" an
+     *
+     * @type {Element}
+     */
     let lostDiv = document.getElementById('gameover');
     console.log("LOST");
     clearInterval(idMoveDown);
@@ -412,6 +506,11 @@ function gameOver() {
 }
 
 function getInvasion() {
+    /**Liefert true, wenn mind. 1 Alien in Alien_formation[]
+     * sonst false
+     *
+     * @type {boolean}
+     */
 
     let invasion = false;
 
@@ -426,7 +525,13 @@ function getInvasion() {
 }
 
 
-function start(level) { //Startfunktion, erstellt das Schiff und das AlienArray
+function start(level) {
+    /**
+     * Startfunktion, erstellt das Schiff und das AlienArray
+     * Schreibt die Leben in das "lives-Div"
+     * Startet drawCanvas(), gameMove und alienAttack
+     * @param level (int) Schwierigkeitsgrad, BewegungsIntervall der Aliens (kleiner = schneller)
+     */
 
     window.addEventListener('keydown', generalListener);
     window.addEventListener('keyup', keyUpListener);
@@ -466,6 +571,10 @@ function start(level) { //Startfunktion, erstellt das Schiff und das AlienArray
 }
 
 var keyUpListener = function (e) {
+    /**Eventlistener bei loslassen einer Taste
+     * Unterbricht ShipmoveIntervalle
+     * @type {Number}
+     */
 
     //nötig für eine weiche Bewegung des Schiffes!
     let key = e.keyCode;
@@ -485,6 +594,13 @@ var keyUpListener = function (e) {
 
 
 var generalListener = function (e) {
+
+    /**Genereller Listener, wird am window angemeldet
+     * startet Rechts- / Linksbewegung bei Tastendruck
+     * ToDo: Pause bei "P"
+     *
+     * @type {Element}
+     */
 
     let pauseDiv = document.getElementById('pause')
     let key = e.keyCode; //speichert den KeyCode des Events
@@ -546,8 +662,12 @@ var generalListener = function (e) {
 
 
 var pauseListener = function (e) {
-     //bei "P" wird der Schussintevall und AlienIntervall unterbrochen,
-    // Pause angezeigt und der Eventlistener wieder entfernt
+    /** bei "P" wird der Schussintevall und AlienIntervall unterbrochen,
+      Pause angezeigt und der Eventlistener wieder entfernt
+     * ToDo: Muss noch angepasst werden.
+     * @type {Element}
+     */
+
     let pauseDiv = document.getElementById('pause')
     let key = e.keyCode;
     if (key == 80) {
@@ -564,9 +684,11 @@ var pauseListener = function (e) {
 }
 
 function drawCanvas() {
-    //löscht das aktuelle Canvas und zeichnet es neu. Nutzt die .draw() Methoden von Alien und Schiff
+    /**löscht das aktuelle Canvas und zeichnet es neu.
+     * Nutzt die .draw() Methoden von Alien, Schiff und Schuss
+     *
+     */
 
-    //idGame = setInterval(function () {
 
     var game = function (){
 
@@ -582,14 +704,17 @@ function drawCanvas() {
         }
 
         shooter.draw(shooter.shooterX);
-        if (shooter.bullet != null)
+        if (shooter.bullet != null){
+
             shooter.bullet.draw();
+
+        }
+
 
         requestAnimationFrame(game)
     }
     requestAnimationFrame(game);
 
-    //},16) //1 Bild pro mS, entspricht 62,5 FPS
 }
 
 
