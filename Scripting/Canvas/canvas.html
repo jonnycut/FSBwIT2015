@@ -29,8 +29,14 @@
             font-size: xx-large;
             display: none;
         }
+        #lives{
+            border: 1px solid black;
+            width: 20px;
+            height: 20px;
+            margin: 20px;
+        }
         body{
-            /**background-image: url("himmel.jpg");*/
+            /*background-image: url("himmel.jpg");*/
         }
     </style>
 </head>
@@ -38,6 +44,8 @@
 
 
 <canvas id="myCanvas" width="700" height="400"></canvas>
+<div id="lives"></div>
+
 <div id="pause">PAUSE</div>
 <div id="gameover">YOU LOST</div>
 <audio id="pShoot">

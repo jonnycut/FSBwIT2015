@@ -97,7 +97,13 @@ class Schuss {
                 //shooter.explode();
                 console.log(this);
                 console.log(shooter)
-                gameOver();
+                if(shooter.lives==0){
+                    gameOver();
+                }else{
+                    console.log("Leben runter");
+                    shooter.lives--;
+                    document.getElementById('lives').innerHTML = shooter.lives;
+                }
             }
 
         }
@@ -117,6 +123,7 @@ class Schiff {
         this.width =20;
         this.height = 13;
         this.bullet = null;
+        this.lives = 3;
         this.img = new Image();
         this.img.src = "panzer02.png";
         this.soundShoot = document.getElementById('pShoot');
@@ -427,7 +434,10 @@ function start(level) { //Startfunktion, erstellt das Schiff und das AlienArray
 
 
 
+
     shooter = new Schiff(300);
+
+    document.getElementById('lives').innerHTML = shooter.lives;
 
     let positionX = 30;
     let positionY = 10;
