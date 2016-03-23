@@ -7,7 +7,6 @@
 var canvas = document.getElementById('myCanvas');
 var ctx = canvas.getContext('2d'); // 2D-Kontext
 var pause = false;
-var test;
 var idGame;
 var alienShot;
 
@@ -20,6 +19,11 @@ var idMoveDown;
 var shooter;
 var alien_formation = [];
 
+var images1 =["alien02.png","alien02b.png",null,null,null,null];
+var images2 =["alien03.png","alien03b.png",null,null,null,null];
+var images3 =["alien04.png","alien04b.png",null,null,null,null];
+var images4 =["alien05.png","alien05b.png",null,null,null,null];
+
 
 
 class Schuss {
@@ -29,6 +33,7 @@ class Schuss {
         this.posX = posX;
         this.posY = posY;
         this.alien = alien;
+        this.isAlive = true;
     }
 
     fly(direction) {
@@ -47,7 +52,7 @@ class Schuss {
 
     draw() {
         ctx.fillStyle = 'black';
-        ctx.fillRect(this.posX, this.posY, 10, 10);
+        ctx.fillRect(this.posX, this.posY, 5, 10);
     }
 
     inTouch(direction) { //löscht ein Alien, wenn es getroffen wird.
@@ -62,8 +67,12 @@ class Schuss {
             for (let i = 0; i < alien_formation.length; i++) {
 
                 if (alien_formation[i] != null) {
-                    if ((this.posX <= alien_formation[i].posX + 20 && this.posX >= alien_formation[i].posX) && (this.posY <= alien_formation[i].posY + 13 && this.posX >= alien_formation[i].posX - 5)) {
-                        alien_formation.splice(i, 1);
+                    if (this.isAlive&&(this.posX <= alien_formation[i].posX + 20 && this.posX >= alien_formation[i].posX) && (this.posY <= alien_formation[i].posY + 13 && this.posY >= alien_formation[i].posY+2)) {
+                        this.isAlive=false;
+                        alien_formation[i].explode(i);
+                        console.log(alien_formation[i]);
+                        console.log(this);
+                        //alien_formation.splice(i, 1);
                         shooter.bullet = null;
 
                     }
@@ -74,15 +83,18 @@ class Schuss {
         } else if (direction == 2) {
 
             if (this.posY > 380) {
+                this.isAlive=false;
                 this.alien.bullet = null;
                 //Problem: Schuss verschwindet random ca auf Mitte des Canvas....keine Ahnung.
                 //ggf. Intervallfunktion in den Schuss integrieren?!
                 //clearInterval(idAlienShot);
             }
 
-            if ((this.posX >= shooter.shooterX && this.posX <= shooter.shooterX + 20) && (this.posY >= 370&& this.posY <380)) {
+            if (this.isAlive&&(this.posX >= shooter.shooterX && this.posX <= shooter.shooterX + 22) && (this.posY >= 370&& this.posY <380)) {
                 clearInterval(idAlienShot);
+                this.isAlive = false;
                 this.alien.bullet = null;
+                //shooter.explode();
                 console.log(this);
                 console.log(shooter)
                 gameOver();
@@ -101,9 +113,13 @@ class Schiff {
     constructor(posX) {
 
         this.shooterX = posX;
+        this.posY = 375;
+        this.width =20;
+        this.height = 13;
         this.bullet = null;
         this.img = new Image();
         this.img.src = "panzer02.png";
+        this.soundShoot = document.getElementById('pShoot');
 
     }
 
@@ -111,7 +127,6 @@ class Schiff {
 
 
         if (this.shooterX <= 670) {
-
             this.shooterX = this.shooterX + 5;
 
 
@@ -136,17 +151,36 @@ class Schiff {
 
 
     }
+    explode(){
+        var ship = this;
+
+        var exp= function(){
+            //Schiff Größe 20x13px;
+
+                ship.img.src='shipExp.png';
+                ship.height+=8;
+                ship.width+=30;
+                ship.posY-=8;
+
+
+            if(ship.height<60)
+                requestAnimationFrame(exp);
+
+
+        }
+        requestAnimationFrame(exp);
+    }
 
     draw(X) {//zeichnet das Schiff an Position X (Y Position ist beim Schiff nicht veränderbar)
 
-        ctx.drawImage(this.img, X, 375, 20, 13);
+        ctx.drawImage(this.img, X, this.posY, this.width,this.height);
     }
 
     shoot() {//feuert einen Schuss aus aktueller Position +9 (Mitte des Schiffes)
         //mit hilfer der schuss.zeichne() Methode ab
         //der Schuss startet immer auf Y=375 (nicht veränderbar)
         if (this.bullet == null) {
-
+            this.soundShoot.play();
             this.bullet = new Schuss(this.shooterX + 9, 375);
             let fire= function () {
                 if(shooter.bullet!= null){
@@ -165,18 +199,41 @@ class Schiff {
 
 class Alien {
 
-    constructor(posX, posY) {
+
+    constructor(posX, posY,art) {
         this.posX = posX;
         this.posY = posY;
+        this.with = 20;
+        this.height = 13;
+        this.isExploding = false;
         this.bullet = null;
-        this.images=["alien03.png","alien03_R.png",null,null,null,null];
+        this.art = art;
+        switch (art) {
+            case 1:
+                this.images = images1;
+                break;
+            case 2:
+                this.images = images2;
+                break;
+            case 3:
+                this.images = images3;
+                break;
+            case 4:
+                this.images = images4;
+                break;
+            default:
+                this.images = images1;
+                break;
+
+        }
         this.img = new Image();
         this.img.src = this.images[0];
 
     }
 
     move(direction) {//schiebt das Alien 1px weiter nach rechts
-        if (direction == "R"){
+        if (direction == "R"&&! this.isExploding){
+
             this.posX++;
             let newBild = this.images[Math.floor(Math.random()*this.images.length)];
             if(newBild!=null)
@@ -185,7 +242,7 @@ class Alien {
         }
 
 
-        else if (direction == "L"){
+        else if (direction == "L"&&! this.isExploding){
             this.posX--;
             let newBild = this.images[Math.floor(Math.random()*this.images.length)];
             if(newBild!=null)
@@ -207,6 +264,34 @@ class Alien {
 
 
     }
+    explode(index){
+        var alien = this;
+        this.isExploding = true;
+
+
+        var exp= function(){
+            //alien Größe 20x13px;
+
+            alien.img.src='exp_g.png';
+            alien.height+=8;
+            alien.with+=8;
+            alien.posX -=4;
+            alien.posY-=4;
+
+            if(alien.height<60)
+                requestAnimationFrame(exp);
+            if(alien.height>=60){
+                console.log(index);
+                alien_formation.splice(index,1);
+
+            }
+
+        }
+        requestAnimationFrame(exp);
+
+
+    }
+
 
     shoot() {//feuert einen Schuss vom Alien aus ab (mit hilfe der schuss.shoot())
         let alien = this;
@@ -229,7 +314,7 @@ class Alien {
 
     draw() {//zeichnet das Alien an seiner X und Y Position. 20px breit, 13px hoch.
 
-        ctx.drawImage(this.img, this.posX, this.posY, 20, 13);
+        ctx.drawImage(this.img, this.posX, this.posY, this.with, this.height);
     }
 }
 
@@ -247,7 +332,7 @@ function gameMove(level) { //sorgt für die Bewegung der Aliens
 
                 alien_formation[i].move(direction);
 
-                if (alien_formation[i].posX >= 680) {
+                if (alien_formation[i].posX >= 680&&!alien_formation[i].isExploding) {
                     alien_formation[i].posX--;
                     for (let a = 0; a < alien_formation.length; a++) {
                             alien_formation[a].movedown();
@@ -262,7 +347,7 @@ function gameMove(level) { //sorgt für die Bewegung der Aliens
 
 
 
-                if (alien_formation[i].posX <= 0) {
+                if (alien_formation[i].posX <= 0&&!alien_formation[i].isExploding) {
                     alien_formation[i].posX++;
                     for (let a = 0; a < alien_formation.length; a++) {
                             alien_formation[a].movedown();
@@ -275,7 +360,7 @@ function gameMove(level) { //sorgt für die Bewegung der Aliens
                     direction = "R";
                 }
 
-                if (alien_formation[i].posY >= 380) {
+                if (alien_formation[i].posY >= 370) {
                     gameOver();
                 }
             }
@@ -346,13 +431,15 @@ function start(level) { //Startfunktion, erstellt das Schiff und das AlienArray
 
     let positionX = 30;
     let positionY = 10;
+    let art =1;
 
     for (let i = 1; i <= 48; i++) {
 
-        alien_formation[i-1] = new Alien(positionX + 20, positionY);
+        alien_formation[i-1] = new Alien(positionX + 20, positionY,art);
         positionX += 50;
 
         if(i%12==0){
+            art++;
             positionY +=30;
             positionX = 30;
         }
@@ -363,7 +450,7 @@ function start(level) { //Startfunktion, erstellt das Schiff und das AlienArray
 
     drawCanvas();
     gameMove(level);
-    //alien_attack();
+    alien_attack();
 
 
 }
@@ -391,6 +478,7 @@ var generalListener = function (e) {
 
     let pauseDiv = document.getElementById('pause')
     let key = e.keyCode; //speichert den KeyCode des Events
+
 
     window.addEventListener('keydown', pauseListener);
 
@@ -495,12 +583,18 @@ function drawCanvas() {
 }
 
 
-start(10);
+start(50);
 
 
 /*<--------------------------------------------------- ABLAGE ------------------------------------------------------->*/
-
-
+//ToDo
+//Automaten einbauen
+//Zustand_Opa_Automat bei GameOver();
+//Zustand OA bei pause;
+//Übergabe Score an OA Spieler;
+//Aliens unterschiedliche Bilder
+//Abschussliste je Spiel nach Alilen id a1 - a6 (innerHTML);
+//Leben updaten (id p1) (innerHTML);
 
 
 
